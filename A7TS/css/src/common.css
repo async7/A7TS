@@ -1,0 +1,21 @@
+@font-face {
+  font-family: weblysleekuil;
+  src: url('../lib/weblysleekui/weblysleekuil.ttf') format('truetype');
+}
+/*@gray-light;*/
+/*GLOBAL TAGS*/
+body {
+  background: transparent url(/images/squairy_light.png) 0 0 repeat;
+  margin-top: 85px;
+}
+h4 {
+  color: #3ea8f4;
+}
+/*GLOBAL CLASSES*/
+.navbar-brand {
+  padding: 5px 20px 0;
+}
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: rgba(249, 249, 249, 0.3);
+}

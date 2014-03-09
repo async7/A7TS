@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{6C0FB22F-F694-47A6-90E6-568A6EE2C7DB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>0.9</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="css\lib\bootstrap\3.0.2\bootstrap.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="css\lib\bootstrap\3.0.2\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="css\lib\fontawesome\4.0.3\fonts\fontawesome-webfont.svg" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\font-awesome.css">
+      <DependentUpon>font-awesome.less</DependentUpon>
+    </Content>
+    <Content Include="css\lib\fontawesome\4.0.3\less\font-awesome.min.css">
+      <DependentUpon>font-awesome.css</DependentUpon>
+    </Content>
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_glass_75_ffffff_1x400.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-icons_222222_256x240.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-icons_454545_256x240.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-icons_888888_256x240.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\images\ui-icons_f6cf3b_256x240.png" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\jquery-ui-1.10.0.custom.css" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\jquery-ui-1.9.2.custom.css" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\jquery.ui.1.10.0.ie.css" />
+    <Content Include="css\lib\jqueryui\bootstrap\0.5\jquery.ui.1.9.2.ie.css" />
+    <Content Include="css\src\common.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
+    <Content Include="css\src\common.min.css">
+      <DependentUpon>common.css</DependentUpon>
+    </Content>
+    <Content Include="css\src\page\SamplePage.css">
+      <DependentUpon>SamplePage.less</DependentUpon>
+    </Content>
+    <Content Include="css\src\page\SamplePage.min.css">
+      <DependentUpon>SamplePage.css</DependentUpon>
+    </Content>
+    <Content Include="SamplePage.html" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\affix.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\alert.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\button.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\carousel.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\collapse.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\dropdown.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\modal.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\popover.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\scrollspy.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\tab.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\tooltip.js" />
+    <Content Include="scripts\lib\bootstrap\3.0.2\transition.js" />
+    <Content Include="scripts\lib\crossroads\0.12\crossroads.js" />
+    <Content Include="scripts\lib\crossroads\0.12\crossroads.min.js" />
+    <Content Include="scripts\lib\crossroads\0.12\crossroads.signals.js" />
+    <Content Include="scripts\lib\crossroads\0.12\crossroads.signals.min.js" />
+    <Content Include="scripts\lib\datatables\1.9.4\css\jquery-dataTables.css" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\back_disabled.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\back_enabled.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\back_enabled_hover.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\favicon.ico" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\forward_disabled.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\forward_enabled.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\forward_enabled_hover.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\sort_asc.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\sort_asc_disabled.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\sort_both.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\sort_desc.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\sort_desc_disabled.png" />
+    <Content Include="scripts\lib\datatables\1.9.4\jquery-dataTables.js" />
+    <Content Include="scripts\lib\history\1.8b2\jquery-history.js" />
+    <Content Include="scripts\lib\history\1.8b2\jquery-history.min.js" />
+    <Content Include="scripts\lib\jqueryui\bootstrap\0.5\jquery-ui-1.9.2.custom.min.js" />
+    <Content Include="scripts\lib\jquery\1.10.2\jquery.js" />
+    <Content Include="scripts\lib\jquery\1.10.2\jquery.min.js" />
+    <Content Include="scripts\lib\lo-dash\2.2.1\lo-dash.js" />
+    <Content Include="scripts\lib\moment\2.4\moment.min.js" />
+    <Content Include="scripts\lib\mustache\0.7.3\mustache.js" />
+    <Content Include="scripts\lib\toastr\2.0.1\toastr.js" />
+    <Content Include="scripts\src\Sample.js" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="scripts\declarations\bootstrap.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\crossroads.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\jasmine.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\jquery.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\jquery.datatables.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\jquery.fileupload.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\jqueryui.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\moment.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\mustache.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\toastr.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\underscore.d.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.AJAX.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.Collection.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.Component.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.IComponent.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.INavigator.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.Navigator.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.Page.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.Route.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.Router.ts" />
+    <TypeScriptCompile Include="scripts\src\common\A7.Service.ts" />
+    <TypeScriptCompile Include="scripts\src\common\cache\A7.Cache.BrowserCache.ts" />
+    <TypeScriptCompile Include="scripts\src\common\cache\A7.Cache.ICacheProvider.ts" />
+    <TypeScriptCompile Include="scripts\src\common\datatables\A7.DataTables.JQueryDatatableHelper.ts" />
+    <TypeScriptCompile Include="scripts\src\common\forms\A7.Forms.Binding.ts" />
+    <TypeScriptCompile Include="scripts\src\common\forms\A7.Forms.Formatting.ts" />
+    <TypeScriptCompile Include="scripts\src\common\forms\A7.Forms.Validation.ts" />
+    <TypeScriptCompile Include="scripts\src\common\notifications\A7.Notifications.INotifier.ts" />
+    <TypeScriptCompile Include="scripts\src\common\notifications\A7.Notifications.ToastrNotifier.ts" />
+    <TypeScriptCompile Include="scripts\src\common\templates\A7.Templates.ITemplateCompiler.ts" />
+    <TypeScriptCompile Include="scripts\src\common\templates\A7.Templates.ITemplateRenderer.ts" />
+    <TypeScriptCompile Include="scripts\src\common\templates\A7.Templates.MustacheProvider.ts" />
+    <TypeScriptCompile Include="scripts\src\common\utililties\A7.Utilities.ObjectUtility.ts" />
+    <TypeScriptCompile Include="scripts\src\components\home\RecentLogTable.ts" />
+    <TypeScriptCompile Include="scripts\src\models\Log.ts" />
+    <TypeScriptCompile Include="scripts\src\pages\SamplePage.ts" />
+    <TypeScriptCompile Include="scripts\src\services\LogService.ts" />
+    <TypeScriptCompile Include="scripts\src\services\MockLogService.ts" />
+    <TypeScriptCompile Include="scripts\tests\common\A7.Collection.Test.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\lib\crossroads\0.12\crossroads.min.js.map" />
+    <Content Include="scripts\lib\crossroads\0.12\crossroads.signals.min.js.map" />
+    <Content Include="scripts\lib\datatables\1.9.4\images\Sorting icons.psd" />
+    <Content Include="scripts\lib\history\1.8b2\jquery-history.min.js.map" />
+    <Content Include="scripts\lib\jquery\1.10.2\jquery.min.js.map" />
+    <Content Include="scripts\lib\toastr\2.0.1\toastr.less" />
+    <Content Include="scripts\tests\Chutzpah.json" />
+    <Content Include="css\lib\bootstrap\3.0.2\alerts.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\badges.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\bootstrap.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\breadcrumbs.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\button-groups.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\buttons.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\carousel.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\close.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\code.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\component-animations.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\dropdowns.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\forms.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\glyphicons.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\grid.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\input-groups.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\jumbotron.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\labels.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\list-group.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\media.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\mixins.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\modals.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\navbar.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\navs.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\normalize.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\pager.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\pagination.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\panels.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\popovers.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\print.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\progress-bars.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\responsive-utilities.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\scaffolding.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\tables.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\theme.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\thumbnails.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\tooltip.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\type.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\utilities.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\variables.azure-theme.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\variables.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\variables.vs-theme.less" />
+    <Content Include="css\lib\bootstrap\3.0.2\wells.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\fonts\fontawesome-webfont.eot" />
+    <Content Include="css\lib\fontawesome\4.0.3\fonts\fontawesome-webfont.ttf" />
+    <Content Include="css\lib\fontawesome\4.0.3\fonts\fontawesome-webfont.woff" />
+    <Content Include="css\lib\fontawesome\4.0.3\fonts\FontAwesome.otf" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\bordered-pulled.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\core.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\extras.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\fixed-width.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\font-awesome.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\icons.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\larger.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\list.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\mixins.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\path.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\rotated-flipped.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\spinning.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\stacked.less" />
+    <Content Include="css\lib\fontawesome\4.0.3\less\variables.less" />
+    <Content Include="css\lib\weblysleekui\weblysleekuil.ttf" />
+    <Content Include="css\lib\weblysleekui\weblysleekuili.ttf" />
+    <Content Include="css\lib\weblysleekui\weblysleekuisb.ttf" />
+    <Content Include="css\lib\weblysleekui\weblysleekuisbi.ttf" />
+    <Content Include="css\lib\weblysleekui\weblysleekuisl.ttf" />
+    <Content Include="css\lib\weblysleekui\weblysleekuisli.ttf" />
+    <Content Include="css\src\common.less" />
+    <Content Include="css\src\component\sample\RecentLogTable.less" />
+    <Content Include="css\src\page\SamplePage.less" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>A7TS</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56369</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56369/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptModuleKind>none</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>
