@@ -4,7 +4,7 @@ module A7 {
 
     export interface ICollection<T> {
         Select<TResult>(iterator: IListIterator<T, TResult>): ICollection<TResult>;
-        Where<TResult>(iterator: (x: T) => boolean): ICollection<T>;
+        Where(iterator: (x: T) => boolean): ICollection<T>;
         ForEach(iterator: IListIterator<T, void >): void;
         OrderByProperty(propertyName: string, direction: string): ICollection<T>;
         OrderByIterator(iterator: (x: T) => any): ICollection<T>;
@@ -43,7 +43,7 @@ module A7 {
             return new Collection<TResult>(_.map(this._collection, iterator) || []);
         }
 
-        Where<TResult>(iterator: (x: T) => boolean): ICollection<TResult> {
+        Where(iterator: (x: T) => boolean): ICollection<T> {
             return new Collection(_.filter(this._collection, iterator) || []);
         }
 

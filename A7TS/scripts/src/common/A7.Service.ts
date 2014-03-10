@@ -58,9 +58,9 @@ module A7 {
         }
 
         OnModified<T>(fnHandler: (event: JQueryEventObject, model: T, eventType: string) => void) {
-            this.OnCreate((event, response) => { fnHandler(event, <T>response, this.CREATED_EVENT); });
-            this.OnUpdate((event, response) => { fnHandler(event, <T>response, this.UPDATED_EVENT); });
-            this.OnDelete((event, response) => { fnHandler(event, <T>response, this.DELETED_EVENT); });
+            this.OnCreate<T>((event, response) => { fnHandler(event, response, this.CREATED_EVENT); });
+            this.OnUpdate<T>((event, response) => { fnHandler(event, response, this.UPDATED_EVENT); });
+            this.OnDelete<T>((event, response) => { fnHandler(event, response, this.DELETED_EVENT); });
         }
 
     }
