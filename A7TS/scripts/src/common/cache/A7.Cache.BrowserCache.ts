@@ -37,7 +37,7 @@ module A7 {
                 }
 
                 removeKeys.ForEach((key) => {
-                    delete this._cache[key];
+                    delete this._cache[<any>key];
                 });
 
             }

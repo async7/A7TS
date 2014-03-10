@@ -1,6 +1,7 @@
 /// <reference path="../common/A7.Service.ts" />
 /// <reference path="../common/a7.collection.ts" />
 /// <reference path="../models/Log.ts" />
+/// <reference path="logservice.ts" />
 
 module Services {
 
@@ -15,12 +16,22 @@ module Services {
 
             var logs: Models.Log[] = [
                 <Models.Log>{
-                    GlobalId: 1,
+                    Id: 1,
+                    GlobalId: 'xxxGUIDxxx',
                     Source: 'Sample TS Application',
                     LogType: 'Info',
-                    Message: 'This is a sample message',
+                    Message: 'This is a sample logging message',
                     Context: null,
-                    PostedDate: '20140310'
+                    PostedDate: '2014-3-11T22:15:52.597'
+                },
+                <Models.Log>{
+                    Id: 2,
+                    GlobalId: 'xxxGUIDxxx',
+                    Source: 'Sample TS Application',
+                    LogType: 'Error',
+                    Message: 'I know you didn\'t divide by zero',
+                    Context: null,
+                    PostedDate: '2014-3-11T22:15:52.597'
                 }
             ];
 

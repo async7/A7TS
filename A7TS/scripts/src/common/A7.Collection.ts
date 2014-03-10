@@ -66,8 +66,8 @@ module A7 {
             return new Collection(_.pluck(this._collection, propertyName) || []);
         }
 
-        Reduce<TResult>(iterator: (prev: TResult, curr: T) => TResult, memo: TResult): ICollection<TResult> {
-            return new Collection(_.reduce(this._collection, iterator, memo) || []);
+        Reduce<TResult>(iterator: (prev: TResult, curr: T) => TResult, memo: TResult): TResult {
+            return _.reduce(this._collection, iterator, memo);
         }
 
         Any(iterator?: (x: T) => boolean): boolean{

@@ -7,7 +7,7 @@ module A7 {
 
     export class Router {
 
-        constructor(public Routes: A7.ICollection<Route> = new A7.Collection()) {
+        constructor(public Routes: A7.ICollection<Route> = new A7.Collection<Route>()) {
 
             var url = window.location.pathname + window.location.search;            
 

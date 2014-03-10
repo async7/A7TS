@@ -60,6 +60,7 @@
     <Content Include="css\src\page\SamplePage.min.css">
       <DependentUpon>SamplePage.css</DependentUpon>
     </Content>
+    <Content Include="images\squairy_light.png" />
     <Content Include="SamplePage.html" />
     <Content Include="scripts\lib\bootstrap\3.0.2\affix.js" />
     <Content Include="scripts\lib\bootstrap\3.0.2\alert.js" />
@@ -100,7 +101,7 @@
     <Content Include="scripts\lib\moment\2.4\moment.min.js" />
     <Content Include="scripts\lib\mustache\0.7.3\mustache.js" />
     <Content Include="scripts\lib\toastr\2.0.1\toastr.js" />
-    <Content Include="scripts\src\Sample.js" />
+    <Content Include="scripts\src\SamplePage.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -228,9 +229,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="images\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -271,5 +270,5 @@
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
   </PropertyGroup>
-  <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
+  <!--<Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />-->
 </Project>

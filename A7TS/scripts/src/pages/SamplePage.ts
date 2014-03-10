@@ -1,5 +1,7 @@
 /// <reference path="../components/home/RecentLogTable.ts" />
 /// <reference path="../../declarations/jquery.d.ts" />
+/// <reference path="../services/mocklogservice.ts" />
+/// <reference path="../services/logservice.ts" />
 /// <reference path="../common/A7.Page.ts" />
 
 class HomePage extends A7.Page {
@@ -10,7 +12,7 @@ class HomePage extends A7.Page {
 
     constructor() {
         super();
-
+        
         this._logService = new Services.MockLogService('/api/log');
         this._recentLogTable = new Components.Home.RecentLogTable('#logTable', this._logService);
 
