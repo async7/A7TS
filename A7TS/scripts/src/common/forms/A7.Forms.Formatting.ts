@@ -6,33 +6,21 @@ module A7 {
         export class Formatting {
 
             static ToInt(value: any, defaultValue: number = 0): number {
-                if (value == '')
-                    value = defaultValue;
-
                 value = value
-                            .toString()
-                            .replace('$', '')
-                            .replace(',', '');
+                    .toString()
+                    .replace('$', '')
+                    .replace(',', '');
 
-                if (isNaN(value))
-                    value = defaultValue;
-
-                return parseInt(value);
+                return parseInt(value) || defaultValue;
             }
 
             static ToFloat(value: any, defaultValue: number = 0.0): number {
-                if (value === '')
-                    value = defaultValue;
-
                 value = value
-                            .toString()
-                            .replace('$', '')
-                            .replace(',', '');
+                    .toString()
+                    .replace('$', '')
+                    .replace(',', '');
 
-                if (isNaN(value))
-                    value = defaultValue;
-
-                return parseFloat(value);
+                return parseFloat(value) || defaultValue;
             }
 
             static ToCurrency(value: any): string {
