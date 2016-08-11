@@ -4,23 +4,22 @@
 /// <reference path="../routing/router.ts" />
 /// <reference path="../routing/route.ts" />
 /// <reference path="../navigation/navigator.ts" />
+/// <reference path="../logging/logmanager.ts" />
 
 namespace A7.Core {
     export class Page {
 
-        _components: A7.Collections.ICollection<Component>;
+        private _components: A7.Collections.ICollection<Component>;
+        private _logger: A7.Logging.ILogger;
 
         constructor() {
-
+                
             this._components = new A7.Collections.Collection<Component>();
-
-            //Fix for < IE9 missing console
-            if (typeof console == "undefined" || typeof console.log == "undefined")
-                console = <any>{ log: function () { } };
+            this._logger = Logging.LogManager.GetLogger("Page");
 
             //Default Error Handling            
             A7.Http.HttpClient.ErrorHandler[500] = (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) => {
-                console.log("[Admin][init] error: ", jqXHR, " ", textStatus, " ", errorThrown);
+                this._logger.error("Internal Server Error: ", jqXHR, " ", textStatus, " ", errorThrown);
             };            
 
             //Configure Navigator
