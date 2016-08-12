@@ -32,6 +32,12 @@
       <DependentUpon>crossroads.signals.es5.js</DependentUpon>
     </Content>
     <Content Include="scripts\lib\crossroads\0.12\crossroads.signals.js" />
+    <Content Include="scripts\lib\handlebars\handlebars-v4.0.5.es5.js">
+      <DependentUpon>handlebars-v4.0.5.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\lib\handlebars\handlebars-v4.0.5.es5.min.js">
+      <DependentUpon>handlebars-v4.0.5.es5.js</DependentUpon>
+    </Content>
     <Content Include="scripts\lib\handlebars\handlebars-v4.0.5.js" />
     <Content Include="scripts\lib\history\1.8b2\jquery-history.es5.js">
       <DependentUpon>jquery-history.js</DependentUpon>
@@ -40,39 +46,70 @@
       <DependentUpon>jquery-history.es5.js</DependentUpon>
     </Content>
     <Content Include="scripts\lib\history\1.8b2\jquery-history.js" />
-    <Content Include="scripts\lib\jquery\jquery-v1.11.3.es5.js">
-      <DependentUpon>jquery-v1.11.3.js</DependentUpon>
+    <Content Include="scripts\lib\jqueryui\jquery-ui-v1.12.es5.js">
+      <DependentUpon>jquery-ui-v1.12.js</DependentUpon>
     </Content>
-    <Content Include="scripts\lib\jquery\jquery-v1.11.3.es5.min.js">
-      <DependentUpon>jquery-v1.11.3.es5.js</DependentUpon>
+    <Content Include="scripts\lib\jqueryui\jquery-ui-v1.12.es5.min.js">
+      <DependentUpon>jquery-ui-v1.12.es5.js</DependentUpon>
     </Content>
-    <Content Include="scripts\lib\jquery\jquery-v1.11.3.js" />
+    <Content Include="scripts\lib\jqueryui\jquery-ui-v1.12.js" />
+    <Content Include="scripts\lib\jquery\jquery-v1.12.4.es5.js">
+      <DependentUpon>jquery-v1.12.4.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\lib\jquery\jquery-v1.12.4.es5.min.js">
+      <DependentUpon>jquery-v1.12.4.es5.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\lib\jquery\jquery-v1.12.4.js" />
+    <Content Include="scripts\lib\underscore\1.8.3\underscore.es5.js">
+      <DependentUpon>underscore.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\lib\underscore\1.8.3\underscore.es5.min.js">
+      <DependentUpon>underscore.es5.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\lib\underscore\1.8.3\underscore.js" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="scripts\declarations\crossroads\crossroads.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\crossroads\js-signals.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\handlebars\handlebars.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\history\history.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\underscore\underscore.d.ts" />
-    <TypeScriptCompile Include="scripts\src\common\cache\A7.Cache.BrowserCache.ts" />
-    <TypeScriptCompile Include="scripts\src\common\cache\A7.Cache.NoCache.ts" />
-    <TypeScriptCompile Include="scripts\src\common\cache\ICacheProvider.ts" />
-    <TypeScriptCompile Include="scripts\src\common\collections\A7.Collections.Collection.ts" />
-    <TypeScriptCompile Include="scripts\src\common\core\A7.Core.Component.ts" />
-    <TypeScriptCompile Include="scripts\src\common\core\A7.Core.ComponentConfig.ts" />
-    <TypeScriptCompile Include="scripts\src\common\core\A7.Core.ComponentConfigManager.ts" />
-    <TypeScriptCompile Include="scripts\src\common\core\A7.Core.IComponent.ts" />
-    <TypeScriptCompile Include="scripts\src\common\core\A7.Core.Page.ts" />
-    <TypeScriptCompile Include="scripts\src\common\http\A7.Http.HttpClient.ts" />
-    <TypeScriptCompile Include="scripts\src\common\navigation\A7.Navigation.INavigator.ts" />
-    <TypeScriptCompile Include="scripts\src\common\navigation\A7.Navigation.Navigator.ts" />
-    <TypeScriptCompile Include="scripts\src\common\routing\A7.Routing.Route.ts" />
-    <TypeScriptCompile Include="scripts\src\common\routing\A7.Routing.Router.ts" />
-    <TypeScriptCompile Include="scripts\src\common\utilities\A7.Utilities.ObjectUtility.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\cache\BrowserCache.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\cache\NoCache.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\cache\ICacheProvider.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\collections\Collection.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\collections\ICollection.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\collections\IList.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\collections\IListIterator.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\core\Component.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\core\ComponentConfig.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\core\ComponentConfigManager.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\core\IComponent.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\core\Page.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\Binding.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\Bs3ValidationStyler.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\Formatting.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\IValidationStyler.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\SelectOption.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\Validation.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\ValidationFailure.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\ValidationResult.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\forms\Validator.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\http\HttpClient.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\logging\ConsoleLogger.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\logging\EmptyLogger.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\logging\ILogger.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\logging\LogManager.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\navigation\INavigator.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\navigation\Navigator.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\routing\Route.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\routing\Router.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\utilities\ObjectUtility.ts" />
     <TypeScriptCompile Include="scripts\tests\common\A7.Collection.Test.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +126,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="scripts\lib\jqueryui\" />
+    <Folder Include="scripts\tests\framework\a7\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

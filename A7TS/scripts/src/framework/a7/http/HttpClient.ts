@@ -1,5 +1,6 @@
 /// <reference path="../collections/collection.ts" />
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="../collections/icollection.ts" />
 
 namespace A7.Http {
     export module HttpClient {

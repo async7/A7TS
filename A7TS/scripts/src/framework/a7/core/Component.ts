@@ -1,20 +1,18 @@
-/// <reference path="../../../declarations/jquery/jquery.d.ts" />
-/// <reference path="../../../declarations/jqueryui/jqueryui.d.ts" />
-/// <reference path="../http/a7.http.httpclient.ts" />
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="../../../../declarations/jqueryui/jqueryui.d.ts" />
+/// <reference path="../http/httpclient.ts" />
 
-module A7.Core {
+namespace A7.Core {
     export class Component {
         _$el: JQuery;        
         _initialized: boolean = false;
-        _cacheProvider: A7.Cache.ICacheProvider;
         _selector: string;
 
-        constructor(selector: string, cacheProvider: A7.Cache.ICacheProvider = null)
+        constructor(selector: string)
         {
             this._selector = selector;
             this._$el = $(selector);
-            this._cacheProvider = cacheProvider;
-            alert('run');
+
             console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
         }        
 
@@ -22,11 +20,13 @@ module A7.Core {
             var dfd = $.Deferred();
 
             if (!this._initialized) {
+
                 fnInit().then(() => {
                     this._$el.show();
                     this._initialized = true;
                     dfd.resolve();
                 });
+
             } else {
                 this._$el.show('fade', 200);
                 dfd.resolve();

@@ -1,15 +1,25 @@
-﻿
+﻿/// <reference path="emptylogger.ts" />
+/// <reference path="consolelogger.ts" />
+/// <reference path="ilogger.ts" />
+/// <reference path="../configuration/configuration.ts" />
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+
 namespace A7.Logging {
 
     export module LogManager {
 
-        export function GetLogger(loggerName: string): ILogger {
+        export function GetLogger(loggerName: string): JQueryPromise<ILogger> {
             //Fix for < IE9 missing console
             if (typeof console == "undefined" || typeof console.log == "undefined") {
-                return new EmptyLogger();
+                return $.Deferred().resolve(new EmptyLogger());
             } else {
-                //Manually turn off console logging by changing this to return an instance of EmptyLogger                             
-                return new ConsoleLogger(loggerName);
+                var onLogResolved = $.Deferred();
+
+                Configuration.GetAppConfiguration().then(config => {
+                    onLogResolved.resolve(config.EnableLogging ? new ConsoleLogger(loggerName) : new EmptyLogger());
+                });
+
+                return onLogResolved.promise();
             }
         }
 
