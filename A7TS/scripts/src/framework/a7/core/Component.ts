@@ -10,7 +10,7 @@ namespace A7.Core {
 
         constructor()
         {
-            //this._$el = $('');
+            //this._$el = $(Configuration.ConfigurationManager.AppConfiguration.);
 
             //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
         }        
@@ -54,10 +54,3 @@ namespace A7.Core {
     }
 }
 
-//Component Decorators
-
-function componentOptions(selector: string = null, viewUrl: string = null){
-    return function (component: Function) {
-        A7.Configuration.ConfigurationManager.AppConfiguration.Components = [<A7.Configuration.ComponentOptions>{ Selector: component.prototype.constructor.toString().match(/function\s*(\w+)/)[1] }];
-    }
-}

@@ -2,9 +2,14 @@
   "Framework": "jasmine",
   "CodeCoverageIncludes":  [ "framework/**.js" ],
   "References": [
-    {
-      "Includes": [ "scripts/lib/**.js" ]
-    }
+    { "Path": "../lib/jquery/jquery-v1.12.4.js" },
+    { "Path": "../lib/jqueryui/jqueryui-v1.12.js" },
+    { "Path": "../lib/crossroads/crossroads.signals.js"},
+    { "Path": "../lib/crossroads/crossroads.js" },
+    { "Path": "../lib/underscore/1.8.3/underscore.js" },
+    { "Path": "../lib/handlebars/handlebars-v4.0.5.js" },
+    { "Path": "../lib/reflect/reflect.js" },
+    { "Path": "../lib/history/1.8b2/jquery-history.js" }
   ],
   "Tests": [
     {
@@ -12,4 +17,4 @@
       "Excludes": [ "**.ts" ]
     }
   ]
-}
+} 

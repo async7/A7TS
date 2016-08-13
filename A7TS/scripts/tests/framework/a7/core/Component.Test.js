@@ -202,6 +202,7 @@ var A7;
     (function (Configuration) {
         var ComponentOptions = (function () {
             function ComponentOptions() {
+                this.LoadViewOnInit = true;
             }
             return ComponentOptions;
         }());
@@ -215,6 +216,8 @@ var A7;
     (function (Configuration) {
         var ConfigurationFile = (function () {
             function ConfigurationFile() {
+                this.EnableLogging = true;
+                this.Components = [];
             }
             return ConfigurationFile;
         }());
@@ -224,6 +227,9 @@ var A7;
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../http/httpclient.ts" />
 /// <reference path="configurationfile.ts" />
+/// <reference path="../collections/icollection.ts" />
+/// <reference path="componentoptions.ts" />
+/// <reference path="../collections/collection.ts" />
 var A7;
 (function (A7) {
     var Configuration;
@@ -231,11 +237,33 @@ var A7;
         var ConfigurationManager = (function () {
             function ConfigurationManager() {
             }
-            ConfigurationManager.Initialize = function () {
+            ConfigurationManager.Initialize = function (configFile) {
                 var _this = this;
+                if (configFile === void 0) { configFile = null; }
+                if (configFile) {
+                    this.AppConfiguration.EnableLogging = configFile.EnableLogging;
+                    this.resovleComponentOptions(configFile);
+                    return $.Deferred().resolve(this.AppConfiguration);
+                }
                 var onConfigLoaded = A7.Http.HttpClient.Get("/src/appconfig.json");
-                onConfigLoaded.then(function (config) { return _this.AppConfiguration = config; });
+                onConfigLoaded.then(function (loadedConfig) {
+                    _this.AppConfiguration.EnableLogging = loadedConfig.EnableLogging;
+                    _this.resovleComponentOptions(loadedConfig);
+                });
                 return onConfigLoaded;
+            };
+            ConfigurationManager.GetComponentOptions = function () {
+                return new A7.Collections.Collection(this.AppConfiguration.Components);
+            };
+            ConfigurationManager.resovleComponentOptions = function (configFile) {
+                var configComponents = new A7.Collections.Collection(configFile.Components);
+                var decoratorComponents = this.GetComponentOptions();
+                configComponents.ForEach(function (configFileComponent) {
+                    decoratorComponents = decoratorComponents.Where(function (x) { return x.Name != configFileComponent.Name; });
+                });
+                //this.AppConfiguration.Components = [];
+                this.AppConfiguration.Components.concat(configComponents.ToArray());
+                //this.AppConfiguration.Components.concat(decoratorComponents.ToArray());
             };
             ConfigurationManager.AppConfiguration = new Configuration.ConfigurationFile();
             return ConfigurationManager;
@@ -253,7 +281,7 @@ var A7;
     (function (Core) {
         var Component = (function () {
             function Component() {
-                //this._$el = $('');
+                //this._$el = $(Configuration.ConfigurationManager.AppConfiguration.);
                 this._initialized = false;
                 //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
             }
@@ -298,15 +326,84 @@ var A7;
         Core.Component = Component;
     })(Core = A7.Core || (A7.Core = {}));
 })(A7 || (A7 = {}));
-//Component Decorators
-function componentOptions(selector, viewUrl) {
-    if (selector === void 0) { selector = null; }
-    if (viewUrl === void 0) { viewUrl = null; }
-    return function (component) {
-        A7.Configuration.ConfigurationManager.AppConfiguration.Components = [{ Selector: component.prototype.constructor.toString().match(/function\s*(\w+)/)[1] }];
-    };
-}
+/// <reference path="../configuration/configurationmanager.ts" />
+var A7;
+(function (A7) {
+    var Decorators;
+    (function (Decorators) {
+        function component(viewUrl, loadViewOnInit, selector) {
+            if (viewUrl === void 0) { viewUrl = null; }
+            if (loadViewOnInit === void 0) { loadViewOnInit = true; }
+            if (selector === void 0) { selector = null; }
+            return function (component) {
+                var componentName = resolveComponentName(component), componentOption = A7.Configuration.ConfigurationManager.GetComponentOptions().First(function (x) { return x.Name == componentName; });
+                if (componentOption && componentOption.Selector) {
+                    selector = componentOption.Selector;
+                }
+                else {
+                    selector = selector || autoResolveComponentSelector(component);
+                }
+                if (componentOption && componentOption.LoadViewOnInit) {
+                    loadViewOnInit = componentOption.LoadViewOnInit;
+                }
+                if (componentOption && componentOption.ViewUrl) {
+                    viewUrl = componentOption.ViewUrl;
+                }
+                A7.Configuration.ConfigurationManager.AppConfiguration.Components.push({ Name: componentName, Selector: selector, LoadViewOnInit: loadViewOnInit, ViewUrl: viewUrl });
+            };
+            function resolveComponentName(component) {
+                return component.prototype.constructor.toString().match(/function\s*(\w+)/)[1];
+            }
+            function autoResolveComponentSelector(component) {
+                var componentName = resolveComponentName(component);
+                return '#' + componentName.substr(0, 1).toLowerCase() + componentName.substr(1, componentName.length - 1);
+            }
+        }
+        Decorators.component = component;
+    })(Decorators = A7.Decorators || (A7.Decorators = {}));
+})(A7 || (A7 = {}));
 /// <reference path="../../../src/framework/a7/core/component.ts" />
+/// <reference path="../../../src/framework/a7/decorators/component.ts" />
+var Tests;
+(function (Tests) {
+    var Components;
+    (function (Components) {
+        var ConfigAndDecoratorComponent = (function (_super) {
+            __extends(ConfigAndDecoratorComponent, _super);
+            function ConfigAndDecoratorComponent() {
+                _super.call(this);
+            }
+            ConfigAndDecoratorComponent = __decorate([
+                A7.Decorators.component('DecoratorComponent.html', false, '#DecoratorComponent'), 
+                __metadata('design:paramtypes', [])
+            ], ConfigAndDecoratorComponent);
+            return ConfigAndDecoratorComponent;
+        }(A7.Core.Component));
+        Components.ConfigAndDecoratorComponent = ConfigAndDecoratorComponent;
+    })(Components = Tests.Components || (Tests.Components = {}));
+})(Tests || (Tests = {}));
+/// <reference path="../../../src/framework/a7/core/component.ts" />
+/// <reference path="../../../src/framework/a7/decorators/component.ts" />
+var Tests;
+(function (Tests) {
+    var Components;
+    (function (Components) {
+        var ConfigComponent = (function (_super) {
+            __extends(ConfigComponent, _super);
+            function ConfigComponent() {
+                _super.call(this);
+            }
+            ConfigComponent = __decorate([
+                A7.Decorators.component(), 
+                __metadata('design:paramtypes', [])
+            ], ConfigComponent);
+            return ConfigComponent;
+        }(A7.Core.Component));
+        Components.ConfigComponent = ConfigComponent;
+    })(Components = Tests.Components || (Tests.Components = {}));
+})(Tests || (Tests = {}));
+/// <reference path="../../../src/framework/a7/core/component.ts" />
+/// <reference path="../../../src/framework/a7/decorators/component.ts" />
 var Tests;
 (function (Tests) {
     var Components;
@@ -317,7 +414,7 @@ var Tests;
                 _super.call(this);
             }
             TestForm = __decorate([
-                componentOptions('testSelector', 'testUrl'), 
+                A7.Decorators.component('/scripts/test/assets/components/testform.html'), 
                 __metadata('design:paramtypes', [])
             ], TestForm);
             return TestForm;
@@ -329,15 +426,31 @@ var Tests;
 /// <reference path="../../../assets/components/testform.ts" />
 /// <reference path="../../../../src/framework/a7/configuration/configurationmanager.ts" />
 /// <reference path="../../../../src/framework/a7/configuration/configurationfile.ts" />
-describe('A Component', function () {
-    beforeAll(function () {
-        var config = {
+/// <reference path="../../../assets/components/configcomponent.ts" />
+/// <reference path="../../../assets/components/configanddecoratorcomponent.ts" />
+describe('A Component Option', function () {
+    beforeEach(function (done) {
+        var componentsConfig = [
+            { Name: 'ConfigComponent', Selector: 'ConfigSelector', LoadViewOnInit: false, ViewUrl: 'ConfigViewUrl' },
+            { Name: 'ConfigAndDecoratorComponent', Selector: 'ConfigAndDecoratorSelector', LoadViewOnInit: false, ViewUrl: 'ConfigAndDecoratorViewUrl' }
+        ];
+        A7.Configuration.ConfigurationManager.Initialize({
             EnableLogging: true,
-            Components: []
-        };
+            Components: componentsConfig
+        }).then(done);
     });
-    it('should set config options on construction', function () {
-        var testForm = new Tests.Components.TestForm();
-        expect(A7.Configuration.ConfigurationManager.AppConfiguration.Components[0].Selector).toEqual('TestForm', A7.Configuration.ConfigurationManager.AppConfiguration.Components[0]);
+    it('should have only 3 in the config', function () {
+        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions();
+        expect(componentOptions.Count()).toEqual(3);
+    });
+    it('should autocreate component options when config not found', function () {
+        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions().First(function (x) { return x.Name == 'TestForm'; });
+        expect(componentOptions).toBeDefined();
+        expect(componentOptions.Selector).toBeDefined();
+        expect(componentOptions.LoadViewOnInit).toEqual(true);
+    });
+    it('should autoresolve selector when not in config or decorator', function () {
+        var testForm = new Tests.Components.TestForm(), componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions().First(function (x) { return x.Name == 'TestForm'; });
+        expect(componentOptions.Selector).toEqual('#testForm');
     });
 });

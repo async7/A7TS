@@ -3,12 +3,12 @@
 
 namespace Tests.Components {
 
-    @A7.Decorators.component('/scripts/test/assets/components/testform.html')
-    export class TestForm extends A7.Core.Component {
+    @A7.Decorators.component('DecoratorComponent.html', false, '#DecoratorComponent')
+    export class ConfigAndDecoratorComponent extends A7.Core.Component {
 
         constructor() {
             super();
-        }        
+        }
 
     }
 

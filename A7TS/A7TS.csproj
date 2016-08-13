@@ -98,6 +98,7 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\core\Component.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\core\IComponent.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\core\Page.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\decorators\Component.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Binding.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Bs3ValidationStyler.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Formatting.ts" />
@@ -117,8 +118,9 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Route.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Router.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\utilities\ObjectUtility.ts" />
+    <TypeScriptCompile Include="scripts\tests\assets\components\ConfigAndDecoratorComponent.ts" />
+    <TypeScriptCompile Include="scripts\tests\assets\components\ConfigComponent.ts" />
     <TypeScriptCompile Include="scripts\tests\assets\components\TestForm.ts" />
-    <TypeScriptCompile Include="scripts\tests\common\A7.Collection.Test.ts" />
     <TypeScriptCompile Include="scripts\tests\framework\a7\core\Component.Test.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -129,8 +131,6 @@
     </None>
     <Content Include="scripts\lib\reflect\Reflect.js.map" />
     <Content Include="scripts\tests\tsconfig.json" />
-    <Content Include="scripts\tests\compile.bat" />
-    <Content Include="scripts\tests\framework\a7\core\Component.Test.js.map" />
     <Content Include="scripts\src\tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
