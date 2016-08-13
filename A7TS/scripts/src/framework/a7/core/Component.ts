@@ -1,22 +1,21 @@
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../../../../declarations/jqueryui/jqueryui.d.ts" />
 /// <reference path="../http/httpclient.ts" />
+/// <reference path="../configuration/configurationmanager.ts" />
 
 namespace A7.Core {
     export class Component {
-        _$el: JQuery;        
-        _initialized: boolean = false;
-        _selector: string;
+        protected _$el: JQuery;        
+        protected _initialized: boolean = false;
 
-        constructor(selector: string)
+        constructor()
         {
-            this._selector = selector;
-            this._$el = $(selector);
+            //this._$el = $('');
 
-            console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
+            //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
         }        
 
-        _Initialize(fnInit: () => JQueryPromise<any>): JQueryPromise<any> {
+        protected _initialize(fnInit: () => JQueryPromise<any>): JQueryPromise<any> {
             var dfd = $.Deferred();
 
             if (!this._initialized) {
@@ -35,7 +34,7 @@ namespace A7.Core {
             return dfd.promise();
         }
 
-        _LoadView(url: string, fromCache: boolean = false): JQueryPromise<any> {
+        protected _loadView(url: string, fromCache: boolean = false): JQueryPromise<any> {
             var dfd = $.Deferred();
             Http.HttpClient.GetHtml(url, fromCache).then(html => {
                 this._$el.html(html);
@@ -52,5 +51,13 @@ namespace A7.Core {
             this._$el.show('fade', 200);
         }
     
+    }
+}
+
+//Component Decorators
+
+function componentOptions(selector: string = null, viewUrl: string = null){
+    return function (component: Function) {
+        A7.Configuration.ConfigurationManager.AppConfiguration.Components = [<A7.Configuration.ComponentOptions>{ Selector: component.prototype.constructor.toString().match(/function\s*(\w+)/)[1] }];
     }
 }

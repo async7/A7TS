@@ -9,7 +9,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>0.9</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.8.2</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -46,6 +46,7 @@
       <DependentUpon>jquery-history.es5.js</DependentUpon>
     </Content>
     <Content Include="scripts\lib\history\1.8b2\jquery-history.js" />
+    <Content Include="scripts\lib\jasmine\2.4.1\jasmine.js" />
     <Content Include="scripts\lib\jqueryui\jquery-ui-v1.12.es5.js">
       <DependentUpon>jquery-ui-v1.12.js</DependentUpon>
     </Content>
@@ -60,6 +61,7 @@
       <DependentUpon>jquery-v1.12.4.es5.js</DependentUpon>
     </Content>
     <Content Include="scripts\lib\jquery\jquery-v1.12.4.js" />
+    <Content Include="scripts\lib\reflect\Reflect.js" />
     <Content Include="scripts\lib\underscore\1.8.3\underscore.es5.js">
       <DependentUpon>underscore.js</DependentUpon>
     </Content>
@@ -67,6 +69,7 @@
       <DependentUpon>underscore.es5.js</DependentUpon>
     </Content>
     <Content Include="scripts\lib\underscore\1.8.3\underscore.js" />
+    <Content Include="scripts\tests\framework\a7\core\Component.Test.js" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -76,8 +79,11 @@
     <TypeScriptCompile Include="scripts\declarations\crossroads\js-signals.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\handlebars\handlebars.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\history\history.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\reflect\reflect-metadata.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\reflect\Reflect.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\underscore\underscore.d.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\cache\BrowserCache.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\cache\NoCache.ts" />
@@ -86,9 +92,10 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\collections\ICollection.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\collections\IList.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\collections\IListIterator.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\configuration\ComponentOptions.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\configuration\ConfigurationManager.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\configuration\ConfigurationFile.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\core\Component.ts" />
-    <TypeScriptCompile Include="scripts\src\framework\a7\core\ComponentConfig.ts" />
-    <TypeScriptCompile Include="scripts\src\framework\a7\core\ComponentConfigManager.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\core\IComponent.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\core\Page.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Binding.ts" />
@@ -110,7 +117,9 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Route.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Router.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\utilities\ObjectUtility.ts" />
+    <TypeScriptCompile Include="scripts\tests\assets\components\TestForm.ts" />
     <TypeScriptCompile Include="scripts\tests\common\A7.Collection.Test.ts" />
+    <TypeScriptCompile Include="scripts\tests\framework\a7\core\Component.Test.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="scripts\tests\Chutzpah.json" />
@@ -118,6 +127,11 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="scripts\lib\reflect\Reflect.js.map" />
+    <Content Include="scripts\tests\tsconfig.json" />
+    <Content Include="scripts\tests\compile.bat" />
+    <Content Include="scripts\tests\framework\a7\core\Component.Test.js.map" />
+    <Content Include="scripts\src\tsconfig.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -126,7 +140,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="scripts\tests\framework\a7\" />
+    <Folder Include="scripts\app\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

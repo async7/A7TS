@@ -1,5 +1,15 @@
 ﻿{
-    "Framework": "jasmine"
-	"CodeCoverageExcludes": ["*.js"],
-    "CodeCoverageIncludes": ["*.ts"]
+  "Framework": "jasmine",
+  "CodeCoverageIncludes":  [ "framework/**.js" ],
+  "References": [
+    {
+      "Includes": [ "scripts/lib/**.js" ]
+    }
+  ],
+  "Tests": [
+    {
+      "Includes": [ "**.js" ],
+      "Excludes": [ "**.ts" ]
+    }
+  ]
 }
