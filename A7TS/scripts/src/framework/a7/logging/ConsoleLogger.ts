@@ -4,24 +4,26 @@ namespace A7.Logging {
     export class ConsoleLogger implements ILogger {
 
         private _loggerName: string;
-        private _messagePrefix: string;
 
-        constructor(loggerName?: string) {
+        constructor(loggerName?: string) {            
             this._loggerName = loggerName;
-            this._messagePrefix = loggerName ? "[" + loggerName + "] " : '';
         }
-    
+
+        private getMessagePrefix(): string {
+            return this._loggerName ? "[" + this._loggerName + "] " : '';
+        }
+
         assert(test?: boolean, message?: string, ...optionalParams: any[]): void {
-            console.assert(test, this._messagePrefix + (message || ''), optionalParams);
+            console.assert(test, this.getMessagePrefix() + (message || ''), optionalParams);
         }
         clear(): void {
             console.clear();
         }      
         count(countTitle?: string): void {
-            console.count(this._messagePrefix + (countTitle || ''));
+            console.count(this.getMessagePrefix() + (countTitle || ''));
         }
         debug(message?: string, ...optionalParams: any[]): void {
-            console.debug(this._messagePrefix + (message || ''));
+            console.debug(this.getMessagePrefix() + (message || ''));
         }
         dir(value?: any, ...optionalParams: any[]): void {
             console.dir(value, optionalParams);
@@ -30,28 +32,28 @@ namespace A7.Logging {
             console.dirxml(value);
         }
         error(message?: any, ...optionalParams: any[]): void {
-            console.error(this._messagePrefix + message, optionalParams);
+            console.error(this.getMessagePrefix() + message, optionalParams);
         }
         group(groupTitle?: string): void {
-            console.group(this._messagePrefix + groupTitle || '');
+            console.group(this.getMessagePrefix() + groupTitle || '');
         }
         groupCollapsed(groupTitle?: string): void {
-            console.groupCollapsed(this._messagePrefix + groupTitle || '');
+            console.groupCollapsed(this.getMessagePrefix() + groupTitle || '');
         }
         groupEnd(): void {
             console.groupEnd();
         }
         info(message?: any, ...optionalParams: any[]): void {
-            console.info(this._messagePrefix + (message || ''), optionalParams);
+            console.info(this.getMessagePrefix() + (message || ''), optionalParams);
         }
         log(message?: any, ...optionalParams: any[]): void {
-            console.log(this._messagePrefix + (message || ''), optionalParams);
+            console.log(this.getMessagePrefix() + (message || ''), optionalParams);
         }
         msIsIndependentlyComposed(element: Element): boolean {
             return console.msIsIndependentlyComposed(element);
         }
         profile(reportName?: string): void {
-            console.profile(this._messagePrefix + (reportName || ''));
+            console.profile(this.getMessagePrefix() + (reportName || ''));
         }
         profileEnd(): void {
             console.profileEnd();
@@ -60,16 +62,16 @@ namespace A7.Logging {
             console.select(element);
         }
         time(timerName?: string): void {
-            console.time(this._messagePrefix + (timerName || ''))
+            console.time(this.getMessagePrefix() + (timerName || ''))
         }
         timeEnd(timerName?: string): void {
-            console.timeEnd(this._messagePrefix + (timerName || ''));
+            console.timeEnd(this.getMessagePrefix() + (timerName || ''));
         }
         trace(message?: any, ...optionalParams: any[]): void {
-            console.trace(this._messagePrefix + (message || ''), optionalParams);
+            console.trace(this.getMessagePrefix() + (message || ''), optionalParams);
         }
         warn(message?: any, ...optionalParams: any[]): void {
-            console.warn(this._messagePrefix + (message || ''), optionalParams);
+            console.warn(this.getMessagePrefix() + (message || ''), optionalParams);
         }
 
     }

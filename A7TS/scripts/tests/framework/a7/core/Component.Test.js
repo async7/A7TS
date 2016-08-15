@@ -282,10 +282,216 @@ var A7;
     })(Configuration = A7.Configuration || (A7.Configuration = {}));
 })(A7 || (A7 = {}));
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="../../../../declarations/underscore/underscore.d.ts" />
+var A7;
+(function (A7) {
+    var Utilities;
+    (function (Utilities) {
+        var ObjectUtility = (function () {
+            function ObjectUtility() {
+            }
+            /**
+                 * Test if all properties and values in calling object are equal to provided object
+                 * @param {object} objectA - object 1 to source
+                 * @param {object} objectB - object 2 to target
+                 * @returns {bool} True is returned if objectB has same properties and values as objectA
+            */
+            ObjectUtility.ObjectsEqual = function (objectA, objectB) {
+                for (var prop in objectA)
+                    if (objectB[prop] != objectA[prop])
+                        return false;
+                return true;
+            };
+            ObjectUtility.ExtendObject = function (objectToExtend, extendWith) {
+                _.extend(objectToExtend, extendWith);
+            };
+            ObjectUtility.Map = function (source, dest) {
+                var destProps = [];
+                for (var prop in dest) {
+                    destProps.push(prop);
+                }
+                for (var prop in source) {
+                    if ($.inArray(prop, destProps) > -1)
+                        dest[prop] = source[prop];
+                }
+                return dest;
+            };
+            ObjectUtility.GetObjectName = function (object) {
+                return object.constructor.toString().match(/function\s*(\w+)/)[1];
+            };
+            return ObjectUtility;
+        }());
+        Utilities.ObjectUtility = ObjectUtility;
+    })(Utilities = A7.Utilities || (A7.Utilities = {}));
+})(A7 || (A7 = {}));
+var A7;
+(function (A7) {
+    var Logging;
+    (function (Logging) {
+        var EmptyLogger = (function () {
+            function EmptyLogger() {
+            }
+            return EmptyLogger;
+        }());
+        Logging.EmptyLogger = EmptyLogger;
+    })(Logging = A7.Logging || (A7.Logging = {}));
+})(A7 || (A7 = {}));
+var A7;
+(function (A7) {
+    var Logging;
+    (function (Logging) {
+        var ConsoleLogger = (function () {
+            function ConsoleLogger(loggerName) {
+                this._loggerName = loggerName;
+            }
+            ConsoleLogger.prototype.getMessagePrefix = function () {
+                var callingMethod = 'no caller'; //this.getMessagePrefix.caller.caller.toString().match(/function ([^\(]+)/)[1];
+                return this._loggerName ? "[" + this._loggerName + " > " + callingMethod + "] " : '[' + callingMethod + '] ';
+            };
+            ConsoleLogger.prototype.assert = function (test, message) {
+                var optionalParams = [];
+                for (var _i = 2; _i < arguments.length; _i++) {
+                    optionalParams[_i - 2] = arguments[_i];
+                }
+                console.assert(test, this.getMessagePrefix() + (message || ''), optionalParams);
+            };
+            ConsoleLogger.prototype.clear = function () {
+                console.clear();
+            };
+            ConsoleLogger.prototype.count = function (countTitle) {
+                console.count(this.getMessagePrefix() + (countTitle || ''));
+            };
+            ConsoleLogger.prototype.debug = function (message) {
+                var optionalParams = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    optionalParams[_i - 1] = arguments[_i];
+                }
+                console.debug(this.getMessagePrefix() + (message || ''));
+            };
+            ConsoleLogger.prototype.dir = function (value) {
+                var optionalParams = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    optionalParams[_i - 1] = arguments[_i];
+                }
+                console.dir(value, optionalParams);
+            };
+            ConsoleLogger.prototype.dirxml = function (value) {
+                console.dirxml(value);
+            };
+            ConsoleLogger.prototype.error = function (message) {
+                var optionalParams = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    optionalParams[_i - 1] = arguments[_i];
+                }
+                console.error(this.getMessagePrefix() + message, optionalParams);
+            };
+            ConsoleLogger.prototype.group = function (groupTitle) {
+                console.group(this.getMessagePrefix() + groupTitle || '');
+            };
+            ConsoleLogger.prototype.groupCollapsed = function (groupTitle) {
+                console.groupCollapsed(this.getMessagePrefix() + groupTitle || '');
+            };
+            ConsoleLogger.prototype.groupEnd = function () {
+                console.groupEnd();
+            };
+            ConsoleLogger.prototype.info = function (message) {
+                var optionalParams = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    optionalParams[_i - 1] = arguments[_i];
+                }
+                console.info(this.getMessagePrefix() + (message || ''), optionalParams);
+            };
+            ConsoleLogger.prototype.log = function (message) {
+                var optionalParams = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    optionalParams[_i - 1] = arguments[_i];
+                }
+                console.log(this.getMessagePrefix() + (message || ''), optionalParams);
+            };
+            ConsoleLogger.prototype.msIsIndependentlyComposed = function (element) {
+                return console.msIsIndependentlyComposed(element);
+            };
+            ConsoleLogger.prototype.profile = function (reportName) {
+                console.profile(this.getMessagePrefix() + (reportName || ''));
+            };
+            ConsoleLogger.prototype.profileEnd = function () {
+                console.profileEnd();
+            };
+            ConsoleLogger.prototype.select = function (element) {
+                console.select(element);
+            };
+            ConsoleLogger.prototype.time = function (timerName) {
+                console.time(this.getMessagePrefix() + (timerName || ''));
+            };
+            ConsoleLogger.prototype.timeEnd = function (timerName) {
+                console.timeEnd(this.getMessagePrefix() + (timerName || ''));
+            };
+            ConsoleLogger.prototype.trace = function (message) {
+                var optionalParams = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    optionalParams[_i - 1] = arguments[_i];
+                }
+                console.trace('[' + this._loggerName + ']' + (message || ''), optionalParams);
+            };
+            ConsoleLogger.prototype.warn = function (message) {
+                var optionalParams = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    optionalParams[_i - 1] = arguments[_i];
+                }
+                console.warn(this.getMessagePrefix() + (message || ''), optionalParams);
+            };
+            return ConsoleLogger;
+        }());
+        Logging.ConsoleLogger = ConsoleLogger;
+    })(Logging = A7.Logging || (A7.Logging = {}));
+})(A7 || (A7 = {}));
+var A7;
+(function (A7) {
+    var Logging;
+    (function (Logging) {
+        var ILogger = (function () {
+            function ILogger() {
+            }
+            return ILogger;
+        }());
+        Logging.ILogger = ILogger;
+    })(Logging = A7.Logging || (A7.Logging = {}));
+})(A7 || (A7 = {}));
+/// <reference path="emptylogger.ts" />
+/// <reference path="consolelogger.ts" />
+/// <reference path="ilogger.ts" />
+/// <reference path="../configuration/configurationmanager.ts" />
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+var A7;
+(function (A7) {
+    var Logging;
+    (function (Logging) {
+        var LogManager = (function () {
+            function LogManager() {
+            }
+            LogManager.GetLogger = function (loggerName) {
+                //Fix for < IE9 missing console
+                if (typeof console == "undefined" || typeof console.log == "undefined") {
+                    return new Logging.EmptyLogger();
+                }
+                else {
+                    var config = A7.Configuration.ConfigurationManager.AppConfiguration;
+                    return config.EnableLogging ? new Logging.ConsoleLogger(loggerName) : new Logging.EmptyLogger();
+                }
+            };
+            return LogManager;
+        }());
+        Logging.LogManager = LogManager;
+    })(Logging = A7.Logging || (A7.Logging = {}));
+})(A7 || (A7 = {}));
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../../../../declarations/jqueryui/jqueryui.d.ts" />
 /// <reference path="../http/httpclient.ts" />
 /// <reference path="../configuration/configurationmanager.ts" />
 /// <reference path="../configuration/componentoptions.ts" />
+/// <reference path="../utilities/objectutility.ts" />
+/// <reference path="../logging/logmanager.ts" />
+/// <reference path="../logging/ilogger.ts" />
 var A7;
 (function (A7) {
     var Core;
@@ -293,9 +499,15 @@ var A7;
         var Component = (function () {
             function Component() {
                 this._initialized = false;
-                var componentName = this.constructor.toString().match(/function\s*(\w+)/)[1];
-                this._componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions();
-                //this._$el = $(Configuration.ConfigurationManager.AppConfiguration.);
+                var componentName = A7.Utilities.ObjectUtility.GetObjectName(this);
+                this._logger = A7.Logging.LogManager.GetLogger(componentName);
+                this._componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions(componentName);
+                this._$el = $(this._componentOptions.Selector);
+                this._logger.trace('trace');
+                this._logger.log('log');
+                this._logger.error('error message');
+                this._logger.warn('warn message');
+                this._logger.info('info message');
                 //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
             }
             Component.prototype._initialize = function (fnInit, viewUrl) {
@@ -340,49 +552,6 @@ var A7;
         }());
         Core.Component = Component;
     })(Core = A7.Core || (A7.Core = {}));
-})(A7 || (A7 = {}));
-/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
-/// <reference path="../../../../declarations/underscore/underscore.d.ts" />
-var A7;
-(function (A7) {
-    var Utilities;
-    (function (Utilities) {
-        var ObjectUtility = (function () {
-            function ObjectUtility() {
-            }
-            /**
-                 * Test if all properties and values in calling object are equal to provided object
-                 * @param {object} objectA - object 1 to source
-                 * @param {object} objectB - object 2 to target
-                 * @returns {bool} True is returned if objectB has same properties and values as objectA
-            */
-            ObjectUtility.ObjectsEqual = function (objectA, objectB) {
-                for (var prop in objectA)
-                    if (objectB[prop] != objectA[prop])
-                        return false;
-                return true;
-            };
-            ObjectUtility.ExtendObject = function (objectToExtend, extendWith) {
-                _.extend(objectToExtend, extendWith);
-            };
-            ObjectUtility.Map = function (source, dest) {
-                var destProps = [];
-                for (var prop in dest) {
-                    destProps.push(prop);
-                }
-                for (var prop in source) {
-                    if ($.inArray(prop, destProps) > -1)
-                        dest[prop] = source[prop];
-                }
-                return dest;
-            };
-            ObjectUtility.GetObjectName = function (object) {
-                return object.constructor.toString().match(/function\s*(\w+)/)[1];
-            };
-            return ObjectUtility;
-        }());
-        Utilities.ObjectUtility = ObjectUtility;
-    })(Utilities = A7.Utilities || (A7.Utilities = {}));
 })(A7 || (A7 = {}));
 /// <reference path="../configuration/configurationmanager.ts" />
 /// <reference path="../utilities/objectutility.ts" />
@@ -504,6 +673,6 @@ describe('A Component Option', function () {
     });
     it('should autoresolve selector when not in config or decorator', function () {
         var testForm = new Tests.Components.TestForm(), componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions('TestForm');
-        expect(componentOptions.Selector).toEqual('#test1Form');
+        expect(componentOptions.Selector).toEqual('#testForm');
     });
 });

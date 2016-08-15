@@ -6,9 +6,9 @@
 
 namespace A7.Logging {
 
-    export module LogManager {
+    export class LogManager {
 
-        export function GetLogger(loggerName: string): ILogger {
+       static GetLogger(loggerName: string): ILogger {
             //Fix for < IE9 missing console
             if (typeof console == "undefined" || typeof console.log == "undefined") {
                 return new EmptyLogger();

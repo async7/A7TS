@@ -4,7 +4,7 @@ namespace A7.Logging {
     export abstract class ILogger {
 
         constructor() {
-            console.log
+
         }
 
         assert: (test?: boolean, message?: string, ...optionalParams: any[]) => void;

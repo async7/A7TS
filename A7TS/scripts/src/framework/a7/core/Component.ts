@@ -3,26 +3,37 @@
 /// <reference path="../http/httpclient.ts" />
 /// <reference path="../configuration/configurationmanager.ts" />
 /// <reference path="../configuration/componentoptions.ts" />
+/// <reference path="../utilities/objectutility.ts" />
+/// <reference path="../logging/logmanager.ts" />
+/// <reference path="../logging/ilogger.ts" />
 
 namespace A7.Core {
     export class Component {
         protected _$el: JQuery;        
         protected _initialized: boolean = false;
         protected _componentOptions: Configuration.ComponentOptions;
+        protected _logger: Logging.ILogger;
 
         constructor()
         {
-            var componentName = this.constructor.toString().match(/function\s*(\w+)/)[1];
-            this._componentOptions = Configuration.ConfigurationManager.GetComponentOptions(
-            //this._$el = $(Configuration.ConfigurationManager.AppConfiguration.);
+            var componentName = Utilities.ObjectUtility.GetObjectName(this);
 
+            this._logger = Logging.LogManager.GetLogger(componentName);
+            this._componentOptions = Configuration.ConfigurationManager.GetComponentOptions(componentName);
+            this._$el = $(this._componentOptions.Selector);
+
+            this._logger.trace('trace');
+            this._logger.log('log');
+            this._logger.error('error message');
+            this._logger.warn('warn message');
+            this._logger.info('info message');
             //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
 
 
         }        
 
         protected _initialize(fnInit: () => JQueryPromise<any>, viewUrl: string = null): JQueryPromise<any> {
-            var dfd = $.Deferred(),
+            var dfd = $.Deferred();
                 
                 //viewUrl = viewUrl ||
 
