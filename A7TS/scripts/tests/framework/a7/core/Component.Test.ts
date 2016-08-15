@@ -7,26 +7,32 @@
 
 describe('A Component Option', () => {
 
-    beforeEach((done) => {
-        var componentsConfig = [
-            <A7.Configuration.ComponentOptions>{ Name: 'ConfigComponent', Selector: 'ConfigSelector', LoadViewOnInit: false, ViewUrl: 'ConfigViewUrl' },
-            <A7.Configuration.ComponentOptions>{ Name: 'ConfigAndDecoratorComponent', Selector: 'ConfigAndDecoratorSelector', LoadViewOnInit: false, ViewUrl: 'ConfigAndDecoratorViewUrl' }
+    beforeEach((done) => { 
+        var componentsConfig = [ 
+            <A7.Configuration.ComponentOptions>{ Name: 'ConfigComponent', Selector: '#configSelector', LoadViewOnInit: false, ViewUrl: 'ConfigViewUrl' },
+            <A7.Configuration.ComponentOptions>{ Name: 'ConfigAndDecoratorComponent', Selector: '#configAndDecoratorSelector', LoadViewOnInit: false, ViewUrl: 'ConfigAndDecoratorViewUrl' }
         ];
 
         A7.Configuration.ConfigurationManager.Initialize(<A7.Configuration.ConfigurationFile>{
-            EnableLogging: true,
-            Components: componentsConfig
-        }).then(done);
-    });
+            EnableLogging: true,  
+            Components: componentsConfig  
+        }).then(done);  
+    }); 
 
     it('should have only 3 in the config', () => {
-        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions();
-         
-        expect(componentOptions.Count()).toEqual(3); 
+        var componentOptions = A7.Configuration.ConfigurationManager.GetAllComponentOptions();
+        expect(componentOptions.Count()).toEqual(3, componentOptions); 
+    }); 
+     
+    it('should override component decorator options with config', () => { 
+        var configAndDecoratorComponent = A7.Configuration.ConfigurationManager.GetComponentOptions('ConfigAndDecoratorComponent');
+
+        expect(configAndDecoratorComponent.Selector).toEqual('#configAndDecoratorSelector');
+        expect(configAndDecoratorComponent.ViewUrl).toEqual('ConfigAndDecoratorViewUrl'); 
     });
      
     it('should autocreate component options when config not found', () => {
-        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions().First(x => x.Name == 'TestForm');
+        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions('TestForm');
         
         expect(componentOptions).toBeDefined();
         expect(componentOptions.Selector).toBeDefined(); 
@@ -36,9 +42,9 @@ describe('A Component Option', () => {
 
     it('should autoresolve selector when not in config or decorator', () => {
         var testForm = new Tests.Components.TestForm(),
-            componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions().First(x => x.Name == 'TestForm');
+            componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions('TestForm');
 
-        expect(componentOptions.Selector).toEqual('#testForm');
+        expect(componentOptions.Selector).toEqual('#test1Form');
     });
 
 

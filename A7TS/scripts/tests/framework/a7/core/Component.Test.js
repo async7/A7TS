@@ -241,30 +241,40 @@ var A7;
                 var _this = this;
                 if (configFile === void 0) { configFile = null; }
                 if (configFile) {
-                    this.AppConfiguration.EnableLogging = configFile.EnableLogging;
-                    this.resovleComponentOptions(configFile);
+                    this.processConfig(configFile);
                     return $.Deferred().resolve(this.AppConfiguration);
                 }
                 var onConfigLoaded = A7.Http.HttpClient.Get("/src/appconfig.json");
                 onConfigLoaded.then(function (loadedConfig) {
-                    _this.AppConfiguration.EnableLogging = loadedConfig.EnableLogging;
-                    _this.resovleComponentOptions(loadedConfig);
+                    _this.processConfig(loadedConfig);
                 });
                 return onConfigLoaded;
             };
-            ConfigurationManager.GetComponentOptions = function () {
-                return new A7.Collections.Collection(this.AppConfiguration.Components);
+            ConfigurationManager.GetAllComponentOptions = function () {
+                var _this = this;
+                if (!this._componentOptions) {
+                    var separator = ' |';
+                    var componentNameIndex = (new A7.Collections.Collection(this.AppConfiguration.Components)).Select(function (x) { return x.Name; }).ToArray().join(separator) + separator;
+                    var decoratorOptions = new A7.Collections.Collection(this._decoratorComponentOptions);
+                    var qualifyingDecoratorComponents = decoratorOptions.Where(function (x) { return componentNameIndex.indexOf(x.Name + separator) < 0; });
+                    this._componentOptions = new A7.Collections.Collection(this.AppConfiguration.Components);
+                    qualifyingDecoratorComponents.ForEach(function (x) {
+                        _this._componentOptions.Add(x);
+                    });
+                }
+                return this._componentOptions;
             };
-            ConfigurationManager.resovleComponentOptions = function (configFile) {
-                var configComponents = new A7.Collections.Collection(configFile.Components);
-                var decoratorComponents = this.GetComponentOptions();
-                configComponents.ForEach(function (configFileComponent) {
-                    decoratorComponents = decoratorComponents.Where(function (x) { return x.Name != configFileComponent.Name; });
-                });
-                //this.AppConfiguration.Components = [];
-                this.AppConfiguration.Components.concat(configComponents.ToArray());
-                //this.AppConfiguration.Components.concat(decoratorComponents.ToArray());
+            ConfigurationManager.GetComponentOptions = function (componentName) {
+                return this.GetAllComponentOptions().First(function (x) { return x.Name == componentName; });
             };
+            ConfigurationManager.RegisterDecoratorComponentOptions = function (componentOptions) {
+                this._decoratorComponentOptions.push(componentOptions);
+            };
+            ConfigurationManager.processConfig = function (config) {
+                this.AppConfiguration = config;
+                this.AppConfiguration.Components = this.GetAllComponentOptions().ToArray();
+            };
+            ConfigurationManager._decoratorComponentOptions = [];
             ConfigurationManager.AppConfiguration = new Configuration.ConfigurationFile();
             return ConfigurationManager;
         }());
@@ -275,19 +285,24 @@ var A7;
 /// <reference path="../../../../declarations/jqueryui/jqueryui.d.ts" />
 /// <reference path="../http/httpclient.ts" />
 /// <reference path="../configuration/configurationmanager.ts" />
+/// <reference path="../configuration/componentoptions.ts" />
 var A7;
 (function (A7) {
     var Core;
     (function (Core) {
         var Component = (function () {
             function Component() {
-                //this._$el = $(Configuration.ConfigurationManager.AppConfiguration.);
                 this._initialized = false;
+                var componentName = this.constructor.toString().match(/function\s*(\w+)/)[1];
+                this._componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions();
+                //this._$el = $(Configuration.ConfigurationManager.AppConfiguration.);
                 //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
             }
-            Component.prototype._initialize = function (fnInit) {
+            Component.prototype._initialize = function (fnInit, viewUrl) {
                 var _this = this;
+                if (viewUrl === void 0) { viewUrl = null; }
                 var dfd = $.Deferred();
+                //viewUrl = viewUrl ||
                 if (!this._initialized) {
                     fnInit().then(function () {
                         _this._$el.show();
@@ -326,7 +341,51 @@ var A7;
         Core.Component = Component;
     })(Core = A7.Core || (A7.Core = {}));
 })(A7 || (A7 = {}));
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="../../../../declarations/underscore/underscore.d.ts" />
+var A7;
+(function (A7) {
+    var Utilities;
+    (function (Utilities) {
+        var ObjectUtility = (function () {
+            function ObjectUtility() {
+            }
+            /**
+                 * Test if all properties and values in calling object are equal to provided object
+                 * @param {object} objectA - object 1 to source
+                 * @param {object} objectB - object 2 to target
+                 * @returns {bool} True is returned if objectB has same properties and values as objectA
+            */
+            ObjectUtility.ObjectsEqual = function (objectA, objectB) {
+                for (var prop in objectA)
+                    if (objectB[prop] != objectA[prop])
+                        return false;
+                return true;
+            };
+            ObjectUtility.ExtendObject = function (objectToExtend, extendWith) {
+                _.extend(objectToExtend, extendWith);
+            };
+            ObjectUtility.Map = function (source, dest) {
+                var destProps = [];
+                for (var prop in dest) {
+                    destProps.push(prop);
+                }
+                for (var prop in source) {
+                    if ($.inArray(prop, destProps) > -1)
+                        dest[prop] = source[prop];
+                }
+                return dest;
+            };
+            ObjectUtility.GetObjectName = function (object) {
+                return object.constructor.toString().match(/function\s*(\w+)/)[1];
+            };
+            return ObjectUtility;
+        }());
+        Utilities.ObjectUtility = ObjectUtility;
+    })(Utilities = A7.Utilities || (A7.Utilities = {}));
+})(A7 || (A7 = {}));
 /// <reference path="../configuration/configurationmanager.ts" />
+/// <reference path="../utilities/objectutility.ts" />
 var A7;
 (function (A7) {
     var Decorators;
@@ -336,23 +395,12 @@ var A7;
             if (loadViewOnInit === void 0) { loadViewOnInit = true; }
             if (selector === void 0) { selector = null; }
             return function (component) {
-                var componentName = resolveComponentName(component), componentOption = A7.Configuration.ConfigurationManager.GetComponentOptions().First(function (x) { return x.Name == componentName; });
-                if (componentOption && componentOption.Selector) {
-                    selector = componentOption.Selector;
-                }
-                else {
-                    selector = selector || autoResolveComponentSelector(component);
-                }
-                if (componentOption && componentOption.LoadViewOnInit) {
-                    loadViewOnInit = componentOption.LoadViewOnInit;
-                }
-                if (componentOption && componentOption.ViewUrl) {
-                    viewUrl = componentOption.ViewUrl;
-                }
-                A7.Configuration.ConfigurationManager.AppConfiguration.Components.push({ Name: componentName, Selector: selector, LoadViewOnInit: loadViewOnInit, ViewUrl: viewUrl });
+                var componentName = resolveComponentName(component);
+                selector = selector || autoResolveComponentSelector(component);
+                A7.Configuration.ConfigurationManager.RegisterDecoratorComponentOptions({ Name: componentName, Selector: selector, LoadViewOnInit: loadViewOnInit, ViewUrl: viewUrl });
             };
             function resolveComponentName(component) {
-                return component.prototype.constructor.toString().match(/function\s*(\w+)/)[1];
+                return A7.Utilities.ObjectUtility.GetObjectName(component.prototype);
             }
             function autoResolveComponentSelector(component) {
                 var componentName = resolveComponentName(component);
@@ -431,8 +479,8 @@ var Tests;
 describe('A Component Option', function () {
     beforeEach(function (done) {
         var componentsConfig = [
-            { Name: 'ConfigComponent', Selector: 'ConfigSelector', LoadViewOnInit: false, ViewUrl: 'ConfigViewUrl' },
-            { Name: 'ConfigAndDecoratorComponent', Selector: 'ConfigAndDecoratorSelector', LoadViewOnInit: false, ViewUrl: 'ConfigAndDecoratorViewUrl' }
+            { Name: 'ConfigComponent', Selector: '#configSelector', LoadViewOnInit: false, ViewUrl: 'ConfigViewUrl' },
+            { Name: 'ConfigAndDecoratorComponent', Selector: '#configAndDecoratorSelector', LoadViewOnInit: false, ViewUrl: 'ConfigAndDecoratorViewUrl' }
         ];
         A7.Configuration.ConfigurationManager.Initialize({
             EnableLogging: true,
@@ -440,17 +488,22 @@ describe('A Component Option', function () {
         }).then(done);
     });
     it('should have only 3 in the config', function () {
-        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions();
-        expect(componentOptions.Count()).toEqual(3);
+        var componentOptions = A7.Configuration.ConfigurationManager.GetAllComponentOptions();
+        expect(componentOptions.Count()).toEqual(3, componentOptions);
+    });
+    it('should override component decorator options with config', function () {
+        var configAndDecoratorComponent = A7.Configuration.ConfigurationManager.GetComponentOptions('ConfigAndDecoratorComponent');
+        expect(configAndDecoratorComponent.Selector).toEqual('#configAndDecoratorSelector');
+        expect(configAndDecoratorComponent.ViewUrl).toEqual('ConfigAndDecoratorViewUrl');
     });
     it('should autocreate component options when config not found', function () {
-        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions().First(function (x) { return x.Name == 'TestForm'; });
+        var componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions('TestForm');
         expect(componentOptions).toBeDefined();
         expect(componentOptions.Selector).toBeDefined();
         expect(componentOptions.LoadViewOnInit).toEqual(true);
     });
     it('should autoresolve selector when not in config or decorator', function () {
-        var testForm = new Tests.Components.TestForm(), componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions().First(function (x) { return x.Name == 'TestForm'; });
-        expect(componentOptions.Selector).toEqual('#testForm');
+        var testForm = new Tests.Components.TestForm(), componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions('TestForm');
+        expect(componentOptions.Selector).toEqual('#test1Form');
     });
 });

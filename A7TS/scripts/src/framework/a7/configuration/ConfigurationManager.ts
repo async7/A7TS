@@ -10,46 +10,60 @@ namespace A7.Configuration {
 
     export class ConfigurationManager {
 
+        private static _decoratorComponentOptions: ComponentOptions[] = [];
+        private static _componentOptions: A7.Collections.ICollection<ComponentOptions>;
+
         public static AppConfiguration: ConfigurationFile = new ConfigurationFile();
 
         public static Initialize(configFile: ConfigurationFile = null): JQueryPromise<ConfigurationFile> {
 
             if (configFile) {
-
-                this.AppConfiguration.EnableLogging = configFile.EnableLogging;
-                this.resovleComponentOptions(configFile);
-
+                this.processConfig(configFile);
                 return $.Deferred().resolve(this.AppConfiguration);
             }
 
             var onConfigLoaded = Http.HttpClient.Get<ConfigurationFile>("/src/appconfig.json");
 
             onConfigLoaded.then(loadedConfig => {
-
-                this.AppConfiguration.EnableLogging = loadedConfig.EnableLogging;
-                this.resovleComponentOptions(loadedConfig);
-
+                this.processConfig(loadedConfig);
             });
 
             return onConfigLoaded;
         }
 
-        public static GetComponentOptions(): A7.Collections.ICollection<ComponentOptions> {
-            return new Collections.Collection(this.AppConfiguration.Components);
+        public static GetAllComponentOptions(): A7.Collections.ICollection<ComponentOptions> {
+
+            if (!this._componentOptions) {
+
+                var separator = ' |';
+                var componentNameIndex = (new Collections.Collection(this.AppConfiguration.Components)).Select(x => x.Name).ToArray().join(separator) + separator;
+                var decoratorOptions = new A7.Collections.Collection(this._decoratorComponentOptions);
+                var qualifyingDecoratorComponents = decoratorOptions.Where(x => componentNameIndex.indexOf(x.Name + separator) < 0);
+
+                this._componentOptions = new Collections.Collection(this.AppConfiguration.Components);
+
+                qualifyingDecoratorComponents.ForEach(x => {  
+                    this._componentOptions.Add(x);
+                });
+
+            }
+
+            return this._componentOptions;
         }
 
-        private static resovleComponentOptions(configFile: ConfigurationFile) {
-            var configComponents = new A7.Collections.Collection(configFile.Components);
-            var decoratorComponents = this.GetComponentOptions();
-
-            configComponents.ForEach(configFileComponent => {
-                decoratorComponents = decoratorComponents.Where(x => x.Name != configFileComponent.Name);
-            });
-
-            //this.AppConfiguration.Components = [];
-            this.AppConfiguration.Components.concat(configComponents.ToArray());
-            //this.AppConfiguration.Components.concat(decoratorComponents.ToArray());
+        public static GetComponentOptions(componentName: string): ComponentOptions {
+            return this.GetAllComponentOptions().First(x => x.Name == componentName);
         }
+
+        public static RegisterDecoratorComponentOptions(componentOptions: ComponentOptions) {
+            this._decoratorComponentOptions.push(componentOptions);
+        }
+
+        private static processConfig(config: ConfigurationFile) {
+            this.AppConfiguration = config;
+            this.AppConfiguration.Components = this.GetAllComponentOptions().ToArray();
+        }
+
     }
 
 }

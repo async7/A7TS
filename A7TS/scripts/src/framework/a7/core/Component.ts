@@ -2,21 +2,29 @@
 /// <reference path="../../../../declarations/jqueryui/jqueryui.d.ts" />
 /// <reference path="../http/httpclient.ts" />
 /// <reference path="../configuration/configurationmanager.ts" />
+/// <reference path="../configuration/componentoptions.ts" />
 
 namespace A7.Core {
     export class Component {
         protected _$el: JQuery;        
         protected _initialized: boolean = false;
+        protected _componentOptions: Configuration.ComponentOptions;
 
         constructor()
         {
+            var componentName = this.constructor.toString().match(/function\s*(\w+)/)[1];
+            this._componentOptions = Configuration.ConfigurationManager.GetComponentOptions(
             //this._$el = $(Configuration.ConfigurationManager.AppConfiguration.);
 
             //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
+
+
         }        
 
-        protected _initialize(fnInit: () => JQueryPromise<any>): JQueryPromise<any> {
-            var dfd = $.Deferred();
+        protected _initialize(fnInit: () => JQueryPromise<any>, viewUrl: string = null): JQueryPromise<any> {
+            var dfd = $.Deferred(),
+                
+                //viewUrl = viewUrl ||
 
             if (!this._initialized) {
 

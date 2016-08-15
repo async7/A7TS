@@ -36,6 +36,9 @@ namespace A7.Utilities {
             return dest;
         }
 
+        static GetObjectName(object: Function) {
+            return object.constructor.toString().match(/function\s*(\w+)/)[1];
+        }
     }
 
 }
