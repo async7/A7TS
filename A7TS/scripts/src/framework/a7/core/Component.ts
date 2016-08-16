@@ -9,48 +9,50 @@
 
 namespace A7.Core {
     export class Component {
-        protected _$el: JQuery;        
+        protected _$el: JQuery;
         protected _initialized: boolean = false;
         protected _componentOptions: Configuration.ComponentOptions;
         protected _logger: Logging.ILogger;
 
-        constructor()
-        {
+        constructor() {
             var componentName = Utilities.ObjectUtility.GetObjectName(this);
 
             this._logger = Logging.LogManager.GetLogger(componentName);
             this._componentOptions = Configuration.ConfigurationManager.GetComponentOptions(componentName);
             this._$el = $(this._componentOptions.Selector);
 
-            this._logger.trace('trace');
-            this._logger.log('log');
-            this._logger.error('error message');
-            this._logger.warn('warn message');
-            this._logger.info('info message');
-            //console.log(this.constructor.toString().match(/function\s*(\w+)/)[1]);
-
-
-        }        
+        }
 
         protected _initialize(fnInit: () => JQueryPromise<any>, viewUrl: string = null): JQueryPromise<any> {
-            var dfd = $.Deferred();
-                
-                //viewUrl = viewUrl ||
+            var onInitialized = $.Deferred(),
+                viewToLoad = viewUrl || this._componentOptions.ViewUrl;
 
             if (!this._initialized) {
 
-                fnInit().then(() => {
-                    this._$el.show();
-                    this._initialized = true;
-                    dfd.resolve();
+                var onViewLoaded: JQueryPromise<any>;
+
+                if (viewToLoad && (this._componentOptions.LoadViewOnInit || viewUrl)) {
+                    onViewLoaded = this._loadView(viewToLoad);
+                } else {
+                    onViewLoaded = $.Deferred().resolve().promise();
+                }
+
+                onViewLoaded.then(() => {
+
+                    fnInit().then(() => {
+                        this._$el.show('fade', 200);
+                        this._initialized = true;
+                        onInitialized.resolve();
+                    });
+
                 });
 
             } else {
                 this._$el.show('fade', 200);
-                dfd.resolve();
+                onInitialized.resolve();
             }
 
-            return dfd.promise();
+            return onInitialized.promise();
         }
 
         protected _loadView(url: string, fromCache: boolean = false): JQueryPromise<any> {
@@ -60,8 +62,8 @@ namespace A7.Core {
                 dfd.resolve();
             });
             return dfd.promise();
-        }        
-        
+        }
+
         Hide(): void {
             this._$el.hide();
         }
@@ -69,7 +71,7 @@ namespace A7.Core {
         Show(...options: any[]): void {
             this._$el.show('fade', 200);
         }
-    
+
     }
 }
 
