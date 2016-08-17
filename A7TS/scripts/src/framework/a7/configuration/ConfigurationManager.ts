@@ -22,7 +22,7 @@ namespace A7.Configuration {
                 return $.Deferred().resolve(this.AppConfiguration);
             }
 
-            var onConfigLoaded = Http.HttpClient.Get<ConfigurationFile>("/src/appconfig.json");
+            var onConfigLoaded = Http.HttpClient.Get<ConfigurationFile>("/scripts/appconfig.json");
 
             onConfigLoaded.then(loadedConfig => {
                 this.processConfig(loadedConfig);

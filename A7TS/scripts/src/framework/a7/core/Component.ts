@@ -9,9 +9,9 @@
 
 namespace A7.Core {
     export class Component {
-        protected _$el: JQuery;
+        public _$el: JQuery;
+        public _componentOptions: Configuration.ComponentOptions;
         protected _initialized: boolean = false;
-        protected _componentOptions: Configuration.ComponentOptions;
         protected _logger: Logging.ILogger;
 
         constructor() {
@@ -23,7 +23,7 @@ namespace A7.Core {
 
         }
 
-        protected _initialize(fnInit: () => JQueryPromise<any>, viewUrl: string = null): JQueryPromise<any> {
+        protected _initialize(fnInit: () => JQueryPromise<any> = null, viewUrl: string = null): JQueryPromise<any> {
             var onInitialized = $.Deferred(),
                 viewToLoad = viewUrl || this._componentOptions.ViewUrl;
 
@@ -39,11 +39,18 @@ namespace A7.Core {
 
                 onViewLoaded.then(() => {
 
-                    fnInit().then(() => {
+                    if (fnInit) {
+                        fnInit().then(() => {
+                            this._$el.show('fade', 200);
+                            this._initialized = true;
+                            onInitialized.resolve();
+                        });
+                    } else {
                         this._$el.show('fade', 200);
-                        this._initialized = true;
                         onInitialized.resolve();
-                    });
+                    }
+
+                    this._initialized = true;
 
                 });
 

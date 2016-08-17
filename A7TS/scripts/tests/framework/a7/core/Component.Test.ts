@@ -16,10 +16,10 @@ describe('A Component Option', () => {
         A7.Configuration.ConfigurationManager.Initialize(<A7.Configuration.ConfigurationFile>{
             EnableLogging: true,  
             Components: componentsConfig  
-        }).then(done);  
+        }).then(done);   
     }); 
        
-    it('should have only 3 in the config', () => {
+    it('should have only 3 in the config', () => { 
         var componentOptions = A7.Configuration.ConfigurationManager.GetAllComponentOptions();
         expect(componentOptions.Count()).toEqual(3, componentOptions); 
     });

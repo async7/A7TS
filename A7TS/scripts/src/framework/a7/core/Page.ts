@@ -5,6 +5,7 @@
 /// <reference path="../routing/route.ts" />
 /// <reference path="../navigation/navigator.ts" />
 /// <reference path="../logging/logmanager.ts" />
+/// <reference path="../configuration/configurationmanager.ts" />
 
 namespace A7.Core {
     export class Page {
@@ -34,6 +35,10 @@ namespace A7.Core {
 
             });
 
+        }
+
+        protected _initialize(): JQueryPromise<Configuration.ConfigurationFile> {
+            return Configuration.ConfigurationManager.Initialize();
         }
 
         RegisterComponent(component: Component): void { this._components.Add(component); }
