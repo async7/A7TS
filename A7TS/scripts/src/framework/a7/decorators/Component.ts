@@ -1,7 +1,7 @@
 ﻿/// <reference path="../configuration/configurationmanager.ts" />
 /// <reference path="../utilities/objectutility.ts" />
 
-namespace A7.Decorators {
+namespace a7 {
     export function component(viewUrl: string = null, loadViewOnInit: boolean = true, selector: string = null) {
         return function (component: Function) { 
             var componentName = resolveComponentName(component);

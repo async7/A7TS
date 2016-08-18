@@ -41,7 +41,12 @@ describe('A Component Option', () => {
 
 
     it('should autoresolve selector when not in config or decorator', () => {
-        var testForm = new Tests.Components.TestForm(),
+        var kernel = new inversify.Kernel();
+
+        kernel.bind<Services.ITestService>(Services.ITestService).to(Services.TestService);
+        kernel.bind<Tests.Components.TestForm>(Tests.Components.TestForm).toSelf();
+
+        var testForm = kernel.get(Tests.Components.TestForm),
             componentOptions = A7.Configuration.ConfigurationManager.GetComponentOptions('TestForm');
 
         expect(componentOptions.Selector).toEqual('#testForm');

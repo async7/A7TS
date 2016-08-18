@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../../declarations/handlebars/handlebars.d.ts" />
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 
-namespace A7.Decorators {
+namespace a7 {
 
     export function bindTemplate(selector: string = null) {
         return function (target: any, propertyKey: string) {
@@ -26,7 +26,7 @@ namespace A7.Decorators {
                     if (!matchedTemplate.length) {
                         this._logger.error('Could not auto bind property ' + propertyKey + '.  Could not find html element via selectors' + selector ? ' ' + selector + ', ' : '' + ' [data-a7-template=' + actualName + '] or [data-a7-template=' + camelizedName + ']');
                     }
-
+               
                     _val = Handlebars.compile(matchedTemplate.html());
                 }
 

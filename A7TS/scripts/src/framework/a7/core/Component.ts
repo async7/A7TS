@@ -6,8 +6,11 @@
 /// <reference path="../utilities/objectutility.ts" />
 /// <reference path="../logging/logmanager.ts" />
 /// <reference path="../logging/ilogger.ts" />
+/// <reference path="../decorators/injectable.ts" />
 
 namespace A7.Core {
+
+    @a7.injectable()
     export class Component {
         public _$el: JQuery;
         public _componentOptions: Configuration.ComponentOptions;

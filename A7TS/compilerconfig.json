@@ -30,5 +30,9 @@
   {
     "outputFile": "scripts/lib/handlebars/handlebars-v4.0.5.es5.js",
     "inputFile": "scripts/lib/handlebars/handlebars-v4.0.5.js"
+  },
+  {
+    "outputFile": "scripts/lib/inversify/inversify.es5.js",
+    "inputFile": "scripts/lib/inversify/inversify.js"
   }
 ]

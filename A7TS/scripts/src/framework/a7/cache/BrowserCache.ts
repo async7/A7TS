@@ -1,7 +1,10 @@
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../collections/collection.ts" />
+/// <reference path="../decorators/injectable.ts" />
 
 namespace A7.Cache {
+
+    @a7.injectable()
     export class BrowserCache implements ICacheProvider {
 
         private _cache: any[] = [];

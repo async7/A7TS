@@ -2,11 +2,11 @@
 
 namespace A7.Cache {
 
-    export interface ICacheProvider {
-        Get<T>(key: string, fn: () => JQueryPromise<T>): JQueryPromise<T>;
-        Remove(key: string);
-        RemoveByStartsWith(keyStartsWith: string);
-        Flush();
+    export abstract class ICacheProvider {
+        Get: <T>(key: string, fn: () => JQueryPromise<T>) => JQueryPromise<T>;
+        Remove: (key: string) => void;
+        RemoveByStartsWith: (keyStartsWith: string) => void;
+        Flush: () => void;
     }
 
 }

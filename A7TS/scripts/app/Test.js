@@ -1,13 +1,16 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
 };
 /// <reference path="../../../../declarations/underscore/underscore.d.ts" />
 var A7;
@@ -672,6 +675,27 @@ var A7;
     })(Core = A7.Core || (A7.Core = {}));
 })(A7 || (A7 = {}));
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+var A7;
+(function (A7) {
+    var Cache;
+    (function (Cache) {
+        var ICacheProvider = (function () {
+            function ICacheProvider() {
+            }
+            return ICacheProvider;
+        }());
+        Cache.ICacheProvider = ICacheProvider;
+    })(Cache = A7.Cache || (A7.Cache = {}));
+})(A7 || (A7 = {}));
+/// <reference path="../../../../declarations/inversify/inversify.d.ts" />
+var a7;
+(function (a7) {
+    function injectable() {
+        return inversify.injectable();
+    }
+    a7.injectable = injectable;
+})(a7 || (a7 = {}));
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../../../../declarations/jqueryui/jqueryui.d.ts" />
 /// <reference path="../http/httpclient.ts" />
 /// <reference path="../configuration/configurationmanager.ts" />
@@ -679,6 +703,7 @@ var A7;
 /// <reference path="../utilities/objectutility.ts" />
 /// <reference path="../logging/logmanager.ts" />
 /// <reference path="../logging/ilogger.ts" />
+/// <reference path="../decorators/injectable.ts" />
 var A7;
 (function (A7) {
     var Core;
@@ -745,6 +770,9 @@ var A7;
                 }
                 this._$el.show('fade', 200);
             };
+            Component = __decorate([
+                a7.injectable()
+            ], Component);
             return Component;
         }());
         Core.Component = Component;
@@ -752,153 +780,252 @@ var A7;
 })(A7 || (A7 = {}));
 /// <reference path="../configuration/configurationmanager.ts" />
 /// <reference path="../utilities/objectutility.ts" />
-var A7;
-(function (A7) {
-    var Decorators;
-    (function (Decorators) {
-        function component(viewUrl, loadViewOnInit, selector) {
-            if (viewUrl === void 0) { viewUrl = null; }
-            if (loadViewOnInit === void 0) { loadViewOnInit = true; }
-            if (selector === void 0) { selector = null; }
-            return function (component) {
-                var componentName = resolveComponentName(component);
-                selector = selector || autoResolveComponentSelector(component);
-                A7.Configuration.ConfigurationManager.RegisterDecoratorComponentOptions({ Name: componentName, Selector: selector, LoadViewOnInit: loadViewOnInit, ViewUrl: viewUrl });
-            };
-            function resolveComponentName(component) {
-                return A7.Utilities.ObjectUtility.GetObjectName(component.prototype);
-            }
-            function autoResolveComponentSelector(component) {
-                var componentName = resolveComponentName(component);
-                return '#' + componentName.substr(0, 1).toLowerCase() + componentName.substr(1, componentName.length - 1);
-            }
+var a7;
+(function (a7) {
+    function component(viewUrl, loadViewOnInit, selector) {
+        if (viewUrl === void 0) { viewUrl = null; }
+        if (loadViewOnInit === void 0) { loadViewOnInit = true; }
+        if (selector === void 0) { selector = null; }
+        return function (component) {
+            var componentName = resolveComponentName(component);
+            selector = selector || autoResolveComponentSelector(component);
+            A7.Configuration.ConfigurationManager.RegisterDecoratorComponentOptions({ Name: componentName, Selector: selector, LoadViewOnInit: loadViewOnInit, ViewUrl: viewUrl });
+        };
+        function resolveComponentName(component) {
+            return A7.Utilities.ObjectUtility.GetObjectName(component.prototype);
         }
-        Decorators.component = component;
-    })(Decorators = A7.Decorators || (A7.Decorators = {}));
-})(A7 || (A7 = {}));
+        function autoResolveComponentSelector(component) {
+            var componentName = resolveComponentName(component);
+            return '#' + componentName.substr(0, 1).toLowerCase() + componentName.substr(1, componentName.length - 1);
+        }
+    }
+    a7.component = component;
+})(a7 || (a7 = {}));
 /// <reference path="../../../../declarations/handlebars/handlebars.d.ts" />
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
-var A7;
-(function (A7) {
-    var Decorators;
-    (function (Decorators) {
-        function bindTemplate(selector) {
-            if (selector === void 0) { selector = null; }
-            return function (target, propertyKey) {
-                var _val; // = this[propertyKey];
-                var getter = function () {
-                    if (!_val) {
-                        var actualName = propertyKey.indexOf('_') == 0 ? propertyKey.substr(1, propertyKey.length - 1) : propertyKey, camelizedName = propertyKey.substr(0, 1).toLowerCase() + propertyKey.substr(1, propertyKey.length - 1), matchedTemplate = selector ? $(selector) : null;
-                        if (!selector || !matchedTemplate.length) {
-                            matchedTemplate = this._$el.find('[data-a7-template="' + actualName + '"]');
-                        }
-                        if (!matchedTemplate.length) {
-                            matchedTemplate = this._$el.find('[data-a7-template="' + camelizedName + '"]');
-                        }
-                        if (!matchedTemplate.length) {
-                            this._logger.error('Could not auto bind property ' + propertyKey + '.  Could not find html element via selectors' + selector ? ' ' + selector + ', ' : '' + ' [data-a7-template=' + actualName + '] or [data-a7-template=' + camelizedName + ']');
-                        }
-                        _val = Handlebars.compile(matchedTemplate.html());
+var a7;
+(function (a7) {
+    function bindTemplate(selector) {
+        if (selector === void 0) { selector = null; }
+        return function (target, propertyKey) {
+            var _val; // = this[propertyKey];
+            var getter = function () {
+                if (!_val) {
+                    var actualName = propertyKey.indexOf('_') == 0 ? propertyKey.substr(1, propertyKey.length - 1) : propertyKey, camelizedName = propertyKey.substr(0, 1).toLowerCase() + propertyKey.substr(1, propertyKey.length - 1), matchedTemplate = selector ? $(selector) : null;
+                    if (!selector || !matchedTemplate.length) {
+                        matchedTemplate = this._$el.find('[data-a7-template="' + actualName + '"]');
                     }
-                    return _val;
-                };
-                if (delete this[propertyKey]) {
-                    Object.defineProperty(target, propertyKey, {
-                        get: getter,
-                        set: function (newVal) { _val = newVal; },
-                        enumerable: true,
-                        configurable: true
-                    });
+                    if (!matchedTemplate.length) {
+                        matchedTemplate = this._$el.find('[data-a7-template="' + camelizedName + '"]');
+                    }
+                    if (!matchedTemplate.length) {
+                        this._logger.error('Could not auto bind property ' + propertyKey + '.  Could not find html element via selectors' + selector ? ' ' + selector + ', ' : '' + ' [data-a7-template=' + actualName + '] or [data-a7-template=' + camelizedName + ']');
+                    }
+                    _val = Handlebars.compile(matchedTemplate.html());
                 }
+                return _val;
             };
-        }
-        Decorators.bindTemplate = bindTemplate;
-    })(Decorators = A7.Decorators || (A7.Decorators = {}));
-})(A7 || (A7 = {}));
+            if (delete this[propertyKey]) {
+                Object.defineProperty(target, propertyKey, {
+                    get: getter,
+                    set: function (newVal) { _val = newVal; },
+                    enumerable: true,
+                    configurable: true
+                });
+            }
+        };
+    }
+    a7.bindTemplate = bindTemplate;
+})(a7 || (a7 = {}));
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../logging/logmanager.ts" />
-var A7;
-(function (A7) {
-    var Decorators;
-    (function (Decorators) {
-        function bindProperty(selector) {
-            if (selector === void 0) { selector = null; }
-            return function (target, propertyKey) {
-                var _val;
-                var getter = function () {
-                    if (!_val) {
-                        var actualName = propertyKey.indexOf('_') == 0 ? propertyKey.substr(1, propertyKey.length - 1) : propertyKey, camelizedName = propertyKey.substr(0, 1).toLowerCase() + propertyKey.substr(1, propertyKey.length - 1);
-                        _val = selector ? $(selector) : null;
-                        if (!selector || !_val.length) {
-                            _val = this._$el.find('[name="' + actualName + '"]');
-                        }
-                        if (!_val.length) {
-                            _val = this._$el.find('[name="' + camelizedName + '"]');
-                        }
-                        if (!_val.length) {
-                            this._logger.error('Could not auto bind property ' + propertyKey + '.  Could not find html element via selectors' + selector ? ' ' + selector + ', ' : '' + ' [name=' + actualName + '] or [name=' + camelizedName + ']');
-                        }
+var a7;
+(function (a7) {
+    function bindProperty(selector) {
+        if (selector === void 0) { selector = null; }
+        return function (target, propertyKey) {
+            var _val;
+            var getter = function () {
+                if (!_val) {
+                    var actualName = propertyKey.indexOf('_') == 0 ? propertyKey.substr(1, propertyKey.length - 1) : propertyKey, camelizedName = propertyKey.substr(0, 1).toLowerCase() + propertyKey.substr(1, propertyKey.length - 1);
+                    _val = selector ? $(selector) : null;
+                    if (!selector || !_val.length) {
+                        _val = this._$el.find('[name="' + actualName + '"]');
                     }
-                    return _val;
-                };
-                if (delete this[propertyKey]) {
-                    Object.defineProperty(target, propertyKey, {
-                        get: getter,
-                        set: function (newVal) { _val = newVal; },
-                        enumerable: true,
-                        configurable: true
-                    });
+                    if (!_val.length) {
+                        _val = this._$el.find('[name="' + camelizedName + '"]');
+                    }
+                    if (!_val.length) {
+                        this._logger.error('Could not auto bind property ' + propertyKey + '.  Could not find html element via selectors' + selector ? ' ' + selector + ', ' : '' + ' [name=' + actualName + '] or [name=' + camelizedName + ']');
+                    }
                 }
+                return _val;
             };
+            if (delete this[propertyKey]) {
+                Object.defineProperty(target, propertyKey, {
+                    get: getter,
+                    set: function (newVal) { _val = newVal; },
+                    enumerable: true,
+                    configurable: true
+                });
+            }
+        };
+    }
+    a7.bindProperty = bindProperty;
+})(a7 || (a7 = {}));
+var Models;
+(function (Models) {
+    var User = (function () {
+        function User() {
+            this.UserName = null;
+            this.FirstName = null;
+            this.LastName = null;
         }
-        Decorators.bindProperty = bindProperty;
-    })(Decorators = A7.Decorators || (A7.Decorators = {}));
-})(A7 || (A7 = {}));
+        return User;
+    }());
+    Models.User = User;
+})(Models || (Models = {}));
+/// <reference path="../framework/a7/collections/icollection.ts" />
+/// <reference path="../framework/a7/collections/collection.ts" />
+/// <reference path="../models/user.ts" />
+/// <reference path="../framework/a7/decorators/injectable.ts" />
+var Services;
+(function (Services) {
+    var ITestService = (function () {
+        function ITestService() {
+        }
+        return ITestService;
+    }());
+    Services.ITestService = ITestService;
+    var TestService = (function () {
+        function TestService() {
+        }
+        TestService.prototype.GetUsers = function () {
+            return new A7.Collections.Collection([
+                { UserName: 'bdylan', FirstName: 'Bob', LastName: 'Dylan' },
+                { UserName: 'jlenon', FirstName: 'John', LastName: 'Lenon' },
+                { UserName: 'jdenver', FirstName: 'John', LastName: 'Denver' }
+            ]);
+        };
+        TestService = __decorate([
+            a7.injectable()
+        ], TestService);
+        return TestService;
+    }());
+    Services.TestService = TestService;
+})(Services || (Services = {}));
+/// <reference path="../../../../declarations/inversify/inversify.d.ts" />
+var a7;
+(function (a7) {
+    function inject(serviceIdentifier) {
+        return inversify.inject(serviceIdentifier);
+    }
+    a7.inject = inject;
+})(a7 || (a7 = {}));
+/// <reference path="../../../src/framework/a7/cache/icacheprovider.ts" />
 /// <reference path="../../../src/framework/a7/core/component.ts" />
 /// <reference path="../../../src/framework/a7/decorators/component.ts" />
 /// <reference path="../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../../../declarations/handlebars/handlebars.d.ts" />
 /// <reference path="../../../src/framework/a7/decorators/bindtemplate.ts" />
 /// <reference path="../../../src/framework/a7/decorators/bindproperty.ts" />
+/// <reference path="../../../src/services/testservice.ts" />
+/// <reference path="../../../src/framework/a7/decorators/inject.ts" />
 var Tests;
 (function (Tests) {
     var Components;
     (function (Components) {
         var TestForm = (function (_super) {
             __extends(TestForm, _super);
-            function TestForm() {
+            function TestForm(userService, cacheProvider) {
                 _super.call(this);
+                this._userService = userService;
+                this._cacheProvider = cacheProvider;
             }
             TestForm.prototype.Show = function () {
                 var _this = this;
                 this._initialize().then(function () {
                     _this._searchButton.click(function (e) {
-                        alert(_this._listTemplate({}));
+                        var templateMessage = _this._listTemplate({});
+                        _this._cacheProvider.Get('Alien', function () { return $.Deferred().resolve('Who is an alien? '); }).then(function (prefix) {
+                            alert(prefix + _this._userService.GetUsers().First(function (x) { return x.FirstName == 'John'; }).UserName + ' ' + templateMessage);
+                        });
                     });
                 });
             };
             __decorate([
-                A7.Decorators.bindProperty()
+                a7.bindProperty()
             ], TestForm.prototype, "_searchButton", void 0);
             __decorate([
-                A7.Decorators.bindTemplate()
+                a7.bindTemplate()
             ], TestForm.prototype, "_listTemplate", void 0);
             TestForm = __decorate([
-                A7.Decorators.component('/scripts/tests/assets/components/testform.html')
+                a7.component('/scripts/tests/assets/components/testform.html'),
+                __param(0, a7.inject(Services.ITestService)),
+                __param(1, a7.inject(A7.Cache.ICacheProvider))
             ], TestForm);
             return TestForm;
         }(A7.Core.Component));
         Components.TestForm = TestForm;
     })(Components = Tests.Components || (Tests.Components = {}));
 })(Tests || (Tests = {}));
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="../collections/collection.ts" />
+/// <reference path="../decorators/injectable.ts" />
+var A7;
+(function (A7) {
+    var Cache;
+    (function (Cache) {
+        var BrowserCache = (function () {
+            function BrowserCache() {
+                this._cache = [];
+            }
+            BrowserCache.prototype.Get = function (key, fn) {
+                if (!this._cache[key])
+                    this._cache[key] = fn();
+                return this._cache[key];
+            };
+            BrowserCache.prototype.Remove = function (key) {
+                delete this._cache[key];
+            };
+            BrowserCache.prototype.RemoveByStartsWith = function (keyStartsWith) {
+                var _this = this;
+                var removeKeys = new A7.Collections.Collection();
+                for (var key in this._cache) {
+                    if (key.indexOf(keyStartsWith) == 0)
+                        removeKeys.Add(key);
+                }
+                removeKeys.ForEach(function (key) {
+                    delete _this._cache[key];
+                });
+            };
+            BrowserCache.prototype.Flush = function () {
+                this._cache = [];
+            };
+            BrowserCache = __decorate([
+                a7.injectable()
+            ], BrowserCache);
+            return BrowserCache;
+        }());
+        Cache.BrowserCache = BrowserCache;
+    })(Cache = A7.Cache || (A7.Cache = {}));
+})(A7 || (A7 = {}));
 /// <reference path="../framework/a7/core/page.ts" />
 /// <reference path="../../tests/assets/components/testform.ts" />
+/// <reference path="../../declarations/inversify/inversify.d.ts" />
+/// <reference path="../services/testservice.ts" />
+/// <reference path="../framework/a7/cache/browsercache.ts" />
 var TestPage = (function (_super) {
     __extends(TestPage, _super);
     function TestPage() {
         _super.call(this);
         this._initialize().then(function (config) {
-            var testForm = new Tests.Components.TestForm();
+            var kernel = new inversify.Kernel();
+            kernel.bind(Services.ITestService).to(Services.TestService);
+            kernel.bind(A7.Cache.ICacheProvider).to(A7.Cache.BrowserCache).inSingletonScope();
+            kernel.bind(Tests.Components.TestForm).toSelf();
+            var cacheProvider = kernel.get(A7.Cache.ICacheProvider), cachedData = cacheProvider.Get('Alien', function () { return $.Deferred().resolve("What's John Lennon's username: "); });
+            var testForm = kernel.get(Tests.Components.TestForm);
             testForm.Show();
         });
     }

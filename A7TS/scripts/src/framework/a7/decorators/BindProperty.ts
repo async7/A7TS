@@ -2,7 +2,7 @@
 /// <reference path="../logging/logmanager.ts" />
 
 
-namespace A7.Decorators {
+namespace a7 {
 
     export function bindProperty(selector: string = null) {
 

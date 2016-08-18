@@ -47,6 +47,13 @@
       <DependentUpon>jquery-history.es5.js</DependentUpon>
     </Content>
     <Content Include="scripts\lib\history\1.8b2\jquery-history.js" />
+    <Content Include="scripts\lib\inversify\inversify.es5.js">
+      <DependentUpon>inversify.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\lib\inversify\inversify.es5.min.js">
+      <DependentUpon>inversify.es5.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\lib\inversify\inversify.js" />
     <Content Include="scripts\lib\jasmine\2.4.1\jasmine.js" />
     <Content Include="scripts\lib\jqueryui\jquery-ui-v1.12.es5.js">
       <DependentUpon>jquery-ui-v1.12.js</DependentUpon>
@@ -82,6 +89,7 @@
     <TypeScriptCompile Include="scripts\declarations\crossroads\js-signals.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\handlebars\handlebars.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\history\history.d.ts" />
+    <TypeScriptCompile Include="scripts\declarations\inversify\inversify.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\jquery\jquery.d.ts" />
@@ -104,6 +112,8 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\decorators\BindProperty.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\decorators\BindTemplate.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\decorators\Component.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\decorators\Inject.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\decorators\Injectable.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Binding.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Bs3ValidationStyler.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Formatting.ts" />
@@ -114,6 +124,7 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\ValidationResult.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Validator.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\http\HttpClient.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\ioc\Container.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\logging\ConsoleLogger.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\logging\EmptyLogger.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\logging\ILogger.ts" />
@@ -123,7 +134,9 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Route.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Router.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\utilities\ObjectUtility.ts" />
+    <TypeScriptCompile Include="scripts\src\models\User.ts" />
     <TypeScriptCompile Include="scripts\src\pages\Test.ts" />
+    <TypeScriptCompile Include="scripts\src\services\TestService.ts" />
     <TypeScriptCompile Include="scripts\tests\assets\components\ConfigAndDecoratorComponent.ts" />
     <TypeScriptCompile Include="scripts\tests\assets\components\ConfigComponent.ts" />
     <TypeScriptCompile Include="scripts\tests\assets\components\TestForm.ts" />
