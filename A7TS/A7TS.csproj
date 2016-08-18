@@ -101,7 +101,7 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\core\Component.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\core\IComponent.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\core\Page.ts" />
-    <TypeScriptCompile Include="scripts\src\framework\a7\decorators\BindEvent.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\decorators\BindProperty.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\decorators\BindTemplate.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\decorators\Component.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Binding.ts" />

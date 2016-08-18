@@ -24,7 +24,7 @@ describe('A Component Option', () => {
         expect(componentOptions.Count()).toEqual(3, componentOptions); 
     });
     
-    it('should override component decorator options with config', () => { 
+    it('should override component decorator options with config', () => {  
         var configAndDecoratorComponent = A7.Configuration.ConfigurationManager.GetComponentOptions('ConfigAndDecoratorComponent');
     
         expect(configAndDecoratorComponent.Selector).toEqual('#configAndDecoratorSelector');

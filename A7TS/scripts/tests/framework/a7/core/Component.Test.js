@@ -628,33 +628,31 @@ var Tests;
         Components.ConfigComponent = ConfigComponent;
     })(Components = Tests.Components || (Tests.Components = {}));
 })(Tests || (Tests = {}));
+/// <reference path="../../../../declarations/handlebars/handlebars.d.ts" />
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 var A7;
 (function (A7) {
     var Decorators;
     (function (Decorators) {
-        function bindEvent(event, selector, handler, handlerReturnsPromise) {
-            if (handler === void 0) { handler = null; }
-            if (handlerReturnsPromise === void 0) { handlerReturnsPromise = false; }
+        function bindTemplate(selector) {
+            if (selector === void 0) { selector = null; }
             return function (target, propertyKey) {
-                var _val = this[propertyKey];
-                console.trace(_val);
+                var _val; // = this[propertyKey];
                 var getter = function () {
-                    var args = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        args[_i - 0] = arguments[_i];
+                    if (!_val) {
+                        var actualName = propertyKey.indexOf('_') == 0 ? propertyKey.substr(1, propertyKey.length - 1) : propertyKey, camelizedName = propertyKey.substr(0, 1).toLowerCase() + propertyKey.substr(1, propertyKey.length - 1), matchedTemplate = selector ? $(selector) : null;
+                        if (!selector || !_val.length) {
+                            _val = this._$el.find('[data-a7-template="' + actualName + '"]');
+                        }
+                        if (!_val.length) {
+                            _val = this._$el.find('[data-a7-template="' + camelizedName + '"]');
+                        }
+                        if (!_val.length) {
+                            this._logger.error('Could not auto bind property ' + propertyKey + '.  Could not find html element via selectors' + selector ? ' ' + selector + ', ' : '' + ' [data-a7-template=' + actualName + '] or [data-a7-template=' + camelizedName + ']');
+                        }
+                        _val = Handlebars.compile(matchedTemplate.html());
                     }
-                    var result;
-                    console.trace(args);
-                    this._$el.on(event, selector, function (event) {
-                        result = handler ? handler(event) : null;
-                    });
-                    if (handlerReturnsPromise) {
-                        result.then(args[0]);
-                    }
-                    else {
-                        args[0](result);
-                    }
+                    return _val;
                 };
                 if (delete this[propertyKey]) {
                     Object.defineProperty(target, propertyKey, {
@@ -666,13 +664,54 @@ var A7;
                 }
             };
         }
-        Decorators.bindEvent = bindEvent;
+        Decorators.bindTemplate = bindTemplate;
+    })(Decorators = A7.Decorators || (A7.Decorators = {}));
+})(A7 || (A7 = {}));
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="../logging/logmanager.ts" />
+var A7;
+(function (A7) {
+    var Decorators;
+    (function (Decorators) {
+        function bindProperty(selector) {
+            if (selector === void 0) { selector = null; }
+            return function (target, propertyKey) {
+                var _val;
+                var getter = function () {
+                    if (!_val) {
+                        var actualName = propertyKey.indexOf('_') == 0 ? propertyKey.substr(1, propertyKey.length - 1) : propertyKey, camelizedName = propertyKey.substr(0, 1).toLowerCase() + propertyKey.substr(1, propertyKey.length - 1);
+                        _val = selector ? $(selector) : null;
+                        if (!selector || !_val.length) {
+                            _val = this._$el.find('[name="' + actualName + '"]');
+                        }
+                        if (!_val.length) {
+                            _val = this._$el.find('[name="' + camelizedName + '"]');
+                        }
+                        if (!_val.length) {
+                            this._logger.error('Could not auto bind property ' + propertyKey + '.  Could not find html element via selectors' + selector ? ' ' + selector + ', ' : '' + ' [name=' + actualName + '] or [name=' + camelizedName + ']');
+                        }
+                    }
+                    return _val;
+                };
+                if (delete this[propertyKey]) {
+                    Object.defineProperty(target, propertyKey, {
+                        get: getter,
+                        set: function (newVal) { _val = newVal; },
+                        enumerable: true,
+                        configurable: true
+                    });
+                }
+            };
+        }
+        Decorators.bindProperty = bindProperty;
     })(Decorators = A7.Decorators || (A7.Decorators = {}));
 })(A7 || (A7 = {}));
 /// <reference path="../../../src/framework/a7/core/component.ts" />
 /// <reference path="../../../src/framework/a7/decorators/component.ts" />
-/// <reference path="../../../src/framework/a7/decorators/bindevent.ts" />
 /// <reference path="../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="../../../declarations/handlebars/handlebars.d.ts" />
+/// <reference path="../../../src/framework/a7/decorators/bindtemplate.ts" />
+/// <reference path="../../../src/framework/a7/decorators/bindproperty.ts" />
 var Tests;
 (function (Tests) {
     var Components;
@@ -685,15 +724,19 @@ var Tests;
             TestForm.prototype.Show = function () {
                 var _this = this;
                 this._initialize().then(function () {
-                    _this.OnBtnClick(function () {
-                        console.trace('Worked');
+                    _this._searchButton.click(function (e) {
+                        alert(_this._listTemplate());
                     });
                 });
             };
             __decorate([
-                A7.Decorators.bindEvent('click', 'button', function (e) { return console.log($(e.target).selector); }), 
+                A7.Decorators.bindProperty(), 
+                __metadata('design:type', Object)
+            ], TestForm.prototype, "_searchButton", void 0);
+            __decorate([
+                A7.Decorators.bindTemplate(), 
                 __metadata('design:type', Function)
-            ], TestForm.prototype, "OnBtnClick", void 0);
+            ], TestForm.prototype, "_listTemplate", void 0);
             TestForm = __decorate([
                 A7.Decorators.component('/scripts/tests/assets/components/testform.html'), 
                 __metadata('design:paramtypes', [])
