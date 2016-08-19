@@ -2,7 +2,6 @@
 
 namespace A7.Ioc {
 
-    export var Container = IocContainer.GetContainer();
     var _container: IocContainer;
 
     class IocContainer {
@@ -21,22 +20,23 @@ namespace A7.Ioc {
             return _container;
         }
 
-        GetInstance<T>(type: T) {
-            this._kernel.get<T>(type);
+        GetInstance<T>(type: any): T {
+            return this._kernel.get<T>(type);
         }
 
-        Register<TService>(serviceType: TService, implementationType: any) {
+        Register<TService>(serviceType: any, implementationType: any) {
             this._kernel.bind<TService>(serviceType).to(implementationType);
         }
 
-        RegisterSingleton<TService>(serviceType: TService, implementationType: any) {
+        RegisterSingleton<TService>(serviceType: any, implementationType: any) {
             this._kernel.bind<TService>(serviceType).to(implementationType).inSingletonScope();
         }
 
-        RegisterSelf<TInstance>(instance: TInstance) {
+        RegisterSelf<TInstance>(instance: any) {
             this._kernel.bind<TInstance>(instance).toSelf();
         }
 
     }
 
+    export var Container = IocContainer.GetContainer();
 }

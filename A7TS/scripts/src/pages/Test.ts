@@ -1,8 +1,8 @@
-﻿/// <reference path="../framework/a7/core/page.ts" />
-/// <reference path="../../tests/assets/components/testform.ts" />
-/// <reference path="../../declarations/inversify/inversify.d.ts" />
+﻿/// <reference path="../../tests/assets/components/testform.ts" />
 /// <reference path="../services/testservice.ts" />
 /// <reference path="../framework/a7/cache/browsercache.ts" />
+/// <reference path="../framework/a7/ioc/container.ts" />
+/// <reference path="../framework/a7/core/page.ts" />
 
 
 class TestPage extends A7.Core.Page {
@@ -12,16 +12,14 @@ class TestPage extends A7.Core.Page {
 
         this._initialize().then(config => {
 
-            var kernel = new inversify.Kernel();
+            A7.Ioc.Container.Register<Services.ITestService>(Services.ITestService, Services.TestService);
+            A7.Ioc.Container.RegisterSingleton<A7.Cache.ICacheProvider>(A7.Cache.ICacheProvider, A7.Cache.BrowserCache);
+            A7.Ioc.Container.RegisterSelf<Tests.Components.TestForm>(Tests.Components.TestForm);
 
-            kernel.bind<Services.ITestService>(Services.ITestService).to(Services.TestService);
-            kernel.bind<A7.Cache.ICacheProvider>(A7.Cache.ICacheProvider).to(A7.Cache.BrowserCache).inSingletonScope();
-            kernel.bind<Tests.Components.TestForm>(Tests.Components.TestForm).toSelf();
-
-            var cacheProvider = kernel.get(A7.Cache.ICacheProvider),
+            var cacheProvider = A7.Ioc.Container.GetInstance<A7.Cache.ICacheProvider>(A7.Cache.ICacheProvider),
                 cachedData = cacheProvider.Get<string>('Alien', () => $.Deferred().resolve("What's John Lennon's username: "));
 
-              var testForm = kernel.get(Tests.Components.TestForm);
+            var testForm = A7.Ioc.Container.GetInstance<Tests.Components.TestForm>(Tests.Components.TestForm);
 
             testForm.Show();
 
