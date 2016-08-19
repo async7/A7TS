@@ -682,6 +682,62 @@ var a7;
     }
     a7.bindProperty = bindProperty;
 })(a7 || (a7 = {}));
+/// <reference path="../http/httpclient.ts" />
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+var A7;
+(function (A7) {
+    var Services;
+    (function (Services) {
+        var Service = (function () {
+            function Service(url) {
+                this.CREATED_EVENT = 'Created';
+                this.UPDATED_EVENT = 'Updated';
+                this.DELETED_EVENT = 'Deleted';
+                this._url = url;
+            }
+            Service.prototype.handleWebRequest = function (promise, eventName) {
+                if (eventName === void 0) { eventName = null; }
+                var dfd = $.Deferred(), __this = this;
+                $.when(promise)
+                    .done(function (response) {
+                    !eventName || $(__this).trigger(eventName, [response]);
+                    dfd.resolve(response);
+                })
+                    .fail(dfd.reject);
+                return dfd.promise();
+            };
+            Service.prototype.GetUrl = function () {
+                return this._url;
+            };
+            Service.prototype.Insert = function (model) {
+                return this.handleWebRequest(A7.Http.HttpClient.Post(this._url, model), this.CREATED_EVENT);
+            };
+            Service.prototype.Update = function (model) {
+                return this.handleWebRequest(A7.Http.HttpClient.Put(this._url, model), this.UPDATED_EVENT);
+            };
+            Service.prototype.DeleteById = function (id) {
+                return this.handleWebRequest(A7.Http.HttpClient.Delete(this._url + '/' + id), this.DELETED_EVENT);
+            };
+            Service.prototype.OnCreate = function (fnHandler) {
+                $(this).on(this.CREATED_EVENT, fnHandler);
+            };
+            Service.prototype.OnUpdate = function (fnHandler) {
+                $(this).on(this.UPDATED_EVENT, fnHandler);
+            };
+            Service.prototype.OnDelete = function (fnHandler) {
+                $(this).on(this.DELETED_EVENT, fnHandler);
+            };
+            Service.prototype.OnModified = function (fnHandler) {
+                var _this = this;
+                this.OnCreate(function (event, response) { fnHandler(event, response, _this.CREATED_EVENT); });
+                this.OnUpdate(function (event, response) { fnHandler(event, response, _this.UPDATED_EVENT); });
+                this.OnDelete(function (event, response) { fnHandler(event, response, _this.DELETED_EVENT); });
+            };
+            return Service;
+        }());
+        Services.Service = Service;
+    })(Services = A7.Services || (A7.Services = {}));
+})(A7 || (A7 = {}));
 var Models;
 (function (Models) {
     var User = (function () {
@@ -696,8 +752,9 @@ var Models;
 })(Models || (Models = {}));
 /// <reference path="../framework/a7/collections/icollection.ts" />
 /// <reference path="../framework/a7/collections/collection.ts" />
-/// <reference path="../models/user.ts" />
 /// <reference path="../framework/a7/decorators/injectable.ts" />
+/// <reference path="../framework/a7/services/service.ts" />
+/// <reference path="../models/user.ts" />
 var Services;
 (function (Services) {
     var ITestService = (function () {
@@ -1053,13 +1110,9 @@ var TestPage = (function (_super) {
     function TestPage() {
         _super.call(this);
         this._initialize().then(function (config) {
-            //var kernel = new inversify.Kernel();
-            //kernel.bind<Services.ITestService>(Services.ITestService).to(Services.TestService);
-            //kernel.bind<A7.Cache.ICacheProvider>(A7.Cache.ICacheProvider).to(A7.Cache.BrowserCache).inSingletonScope();
-            //kernel.bind<Tests.Components.TestForm>(Tests.Components.TestForm).toSelf();
             A7.Ioc.Container.Register(Services.ITestService, Services.TestService);
             A7.Ioc.Container.RegisterSingleton(A7.Cache.ICacheProvider, A7.Cache.BrowserCache);
-            //A7.Ioc.Container.RegisterSelf<Tests.Components.TestForm>(Tests.Components.TestForm);
+            A7.Ioc.Container.RegisterSelf(Tests.Components.TestForm);
             var cacheProvider = A7.Ioc.Container.GetInstance(A7.Cache.ICacheProvider), cachedData = cacheProvider.Get('Alien', function () { return $.Deferred().resolve("What's John Lennon's username: "); });
             var testForm = A7.Ioc.Container.GetInstance(Tests.Components.TestForm);
             testForm.Show();

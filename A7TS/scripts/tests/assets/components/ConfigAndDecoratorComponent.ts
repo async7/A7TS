@@ -3,7 +3,7 @@
 
 namespace Tests.Components {
 
-    @A7.Decorators.component('DecoratorComponent.html', false, '#DecoratorComponent')
+    @a7.component('DecoratorComponent.html', false, '#DecoratorComponent')
     export class ConfigAndDecoratorComponent extends A7.Core.Component {
 
         constructor() {

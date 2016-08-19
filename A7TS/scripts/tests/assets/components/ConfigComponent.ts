@@ -3,7 +3,7 @@
 
 namespace Tests.Components {
 
-    @A7.Decorators.component()
+    @a7.component()
     export class ConfigComponent extends A7.Core.Component {
 
         constructor() {

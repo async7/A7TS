@@ -486,6 +486,14 @@ var A7;
         Logging.LogManager = LogManager;
     })(Logging = A7.Logging || (A7.Logging = {}));
 })(A7 || (A7 = {}));
+/// <reference path="../../../../declarations/inversify/inversify.d.ts" />
+var a7;
+(function (a7) {
+    function injectable() {
+        return inversify.injectable();
+    }
+    a7.injectable = injectable;
+})(a7 || (a7 = {}));
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
 /// <reference path="../../../../declarations/jqueryui/jqueryui.d.ts" />
 /// <reference path="../http/httpclient.ts" />
@@ -494,7 +502,7 @@ var A7;
 /// <reference path="../utilities/objectutility.ts" />
 /// <reference path="../logging/logmanager.ts" />
 /// <reference path="../logging/ilogger.ts" />
-/// <reference path="../../../../declarations/inversify/inversify.d.ts" />
+/// <reference path="../decorators/injectable.ts" />
 var A7;
 (function (A7) {
     var Core;
@@ -562,7 +570,7 @@ var A7;
                 this._$el.show('fade', 200);
             };
             Component = __decorate([
-                inversify.injectable(), 
+                a7.injectable(), 
                 __metadata('design:paramtypes', [])
             ], Component);
             return Component;
@@ -605,7 +613,7 @@ var Tests;
                 _super.call(this);
             }
             ConfigAndDecoratorComponent = __decorate([
-                A7.Decorators.component('DecoratorComponent.html', false, '#DecoratorComponent'), 
+                a7.component('DecoratorComponent.html', false, '#DecoratorComponent'), 
                 __metadata('design:paramtypes', [])
             ], ConfigAndDecoratorComponent);
             return ConfigAndDecoratorComponent;
@@ -625,7 +633,7 @@ var Tests;
                 _super.call(this);
             }
             ConfigComponent = __decorate([
-                A7.Decorators.component(), 
+                a7.component(), 
                 __metadata('design:paramtypes', [])
             ], ConfigComponent);
             return ConfigComponent;
@@ -730,10 +738,67 @@ var Models;
     }());
     Models.User = User;
 })(Models || (Models = {}));
+/// <reference path="../http/httpclient.ts" />
+/// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+var A7;
+(function (A7) {
+    var Services;
+    (function (Services) {
+        var Service = (function () {
+            function Service(url) {
+                this.CREATED_EVENT = 'Created';
+                this.UPDATED_EVENT = 'Updated';
+                this.DELETED_EVENT = 'Deleted';
+                this._url = url;
+            }
+            Service.prototype.handleWebRequest = function (promise, eventName) {
+                if (eventName === void 0) { eventName = null; }
+                var dfd = $.Deferred(), __this = this;
+                $.when(promise)
+                    .done(function (response) {
+                    !eventName || $(__this).trigger(eventName, [response]);
+                    dfd.resolve(response);
+                })
+                    .fail(dfd.reject);
+                return dfd.promise();
+            };
+            Service.prototype.GetUrl = function () {
+                return this._url;
+            };
+            Service.prototype.Insert = function (model) {
+                return this.handleWebRequest(A7.Http.HttpClient.Post(this._url, model), this.CREATED_EVENT);
+            };
+            Service.prototype.Update = function (model) {
+                return this.handleWebRequest(A7.Http.HttpClient.Put(this._url, model), this.UPDATED_EVENT);
+            };
+            Service.prototype.DeleteById = function (id) {
+                return this.handleWebRequest(A7.Http.HttpClient.Delete(this._url + '/' + id), this.DELETED_EVENT);
+            };
+            Service.prototype.OnCreate = function (fnHandler) {
+                $(this).on(this.CREATED_EVENT, fnHandler);
+            };
+            Service.prototype.OnUpdate = function (fnHandler) {
+                $(this).on(this.UPDATED_EVENT, fnHandler);
+            };
+            Service.prototype.OnDelete = function (fnHandler) {
+                $(this).on(this.DELETED_EVENT, fnHandler);
+            };
+            Service.prototype.OnModified = function (fnHandler) {
+                var _this = this;
+                this.OnCreate(function (event, response) { fnHandler(event, response, _this.CREATED_EVENT); });
+                this.OnUpdate(function (event, response) { fnHandler(event, response, _this.UPDATED_EVENT); });
+                this.OnDelete(function (event, response) { fnHandler(event, response, _this.DELETED_EVENT); });
+            };
+            return Service;
+        }());
+        Services.Service = Service;
+    })(Services = A7.Services || (A7.Services = {}));
+})(A7 || (A7 = {}));
 /// <reference path="../framework/a7/collections/icollection.ts" />
 /// <reference path="../framework/a7/collections/collection.ts" />
+/// <reference path="../framework/a7/decorators/injectable.ts" />
+/// <reference path="../framework/a7/services/service.ts" />
 /// <reference path="../models/user.ts" />
-/// <reference path="../../declarations/inversify/inversify.d.ts" />
 var Services;
 (function (Services) {
     var ITestService = (function () {
@@ -753,13 +818,21 @@ var Services;
             ]);
         };
         TestService = __decorate([
-            inversify.injectable(), 
+            a7.injectable(), 
             __metadata('design:paramtypes', [])
         ], TestService);
         return TestService;
     }());
     Services.TestService = TestService;
 })(Services || (Services = {}));
+/// <reference path="../../../../declarations/inversify/inversify.d.ts" />
+var a7;
+(function (a7) {
+    function inject(serviceIdentifier) {
+        return inversify.inject(serviceIdentifier);
+    }
+    a7.inject = inject;
+})(a7 || (a7 = {}));
 /// <reference path="../../../src/framework/a7/cache/icacheprovider.ts" />
 /// <reference path="../../../src/framework/a7/core/component.ts" />
 /// <reference path="../../../src/framework/a7/decorators/component.ts" />
@@ -768,7 +841,7 @@ var Services;
 /// <reference path="../../../src/framework/a7/decorators/bindtemplate.ts" />
 /// <reference path="../../../src/framework/a7/decorators/bindproperty.ts" />
 /// <reference path="../../../src/services/testservice.ts" />
-/// <reference path="../../../declarations/inversify/inversify.d.ts" />
+/// <reference path="../../../src/framework/a7/decorators/inject.ts" />
 var Tests;
 (function (Tests) {
     var Components;
@@ -801,8 +874,8 @@ var Tests;
             ], TestForm.prototype, "_listTemplate", void 0);
             TestForm = __decorate([
                 a7.component('/scripts/tests/assets/components/testform.html'),
-                __param(0, inversify.inject(Services.ITestService)),
-                __param(1, inversify.inject(A7.Cache.ICacheProvider)), 
+                __param(0, a7.inject(Services.ITestService)),
+                __param(1, a7.inject(A7.Cache.ICacheProvider)), 
                 __metadata('design:paramtypes', [Services.ITestService, A7.Cache.ICacheProvider])
             ], TestForm);
             return TestForm;

@@ -1,7 +1,9 @@
 ﻿/// <reference path="../framework/a7/collections/icollection.ts" />
 /// <reference path="../framework/a7/collections/collection.ts" />
-/// <reference path="../models/user.ts" />
 /// <reference path="../framework/a7/decorators/injectable.ts" />
+/// <reference path="../framework/a7/services/service.ts" />
+/// <reference path="../models/user.ts" />
+
 
 namespace Services {
     
@@ -11,7 +13,7 @@ namespace Services {
 
     @a7.injectable()
     export class TestService implements ITestService {
-
+    
         GetUsers() {
             return new A7.Collections.Collection([
                 <Models.User>{ UserName: 'bdylan', FirstName: 'Bob', LastName: 'Dylan' },
@@ -19,6 +21,8 @@ namespace Services {
                 <Models.User>{ UserName: 'jdenver', FirstName: 'John', LastName: 'Denver' }
             ]);
         }
+
+
 
     }
 

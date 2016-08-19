@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A7TS", "A7TS.csproj", "{6C0FB22F-F694-47A6-90E6-568A6EE2C7DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A7TSGenerator", "..\..\A7TSGenerator\src\A7TSGenerator\A7TSGenerator\A7TSGenerator.csproj", "{C96904B4-C000-4413-B149-D3E68E9DC0B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6C0FB22F-F694-47A6-90E6-568A6EE2C7DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C0FB22F-F694-47A6-90E6-568A6EE2C7DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C0FB22F-F694-47A6-90E6-568A6EE2C7DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C96904B4-C000-4413-B149-D3E68E9DC0B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C96904B4-C000-4413-B149-D3E68E9DC0B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C96904B4-C000-4413-B149-D3E68E9DC0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C96904B4-C000-4413-B149-D3E68E9DC0B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

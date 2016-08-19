@@ -18,6 +18,7 @@
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Global.asax" />
     <Content Include="scripts\app\Test.js" />
     <Content Include="scripts\lib\crossroads\0.12\crossroads.es5.js">
       <DependentUpon>crossroads.js</DependentUpon>
@@ -133,10 +134,13 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\navigation\Navigator.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Route.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\routing\Router.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7\services\Service.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\utilities\ObjectUtility.ts" />
     <TypeScriptCompile Include="scripts\src\models\User.ts" />
+    <TypeScriptCompile Include="scripts\src\models\Widget.ts" />
     <TypeScriptCompile Include="scripts\src\pages\Test.ts" />
     <TypeScriptCompile Include="scripts\src\services\TestService.ts" />
+    <TypeScriptCompile Include="scripts\src\services\WidgetsService.ts" />
     <TypeScriptCompile Include="scripts\tests\assets\components\ConfigAndDecoratorComponent.ts" />
     <TypeScriptCompile Include="scripts\tests\assets\components\ConfigComponent.ts" />
     <TypeScriptCompile Include="scripts\tests\assets\components\TestForm.ts" />
@@ -152,6 +156,7 @@
     <Content Include="scripts\tests\tsconfig.json" />
     <Content Include="scripts\src\tsconfig.json" />
     <Content Include="scripts\appconfig.json" />
+    <Content Include="packages.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -160,12 +165,47 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Controllers\" />
     <Folder Include="scripts\src\components\test\" />
     <Folder Include="scripts\src\framework\a7.contrib\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\WidgetsController.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\A7TSGenerator\src\A7TSGenerator\A7TSGenerator\A7TSGenerator.csproj">
+      <Project>{c96904b4-c000-4413-b149-d3e68e9dc0b4}</Project>
+      <Name>A7TSGenerator</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
