@@ -1,8 +1,10 @@
 /// <reference path="../../../../declarations/jquery/jquery.d.ts" />
+/// <reference path="selectoption.ts" />
 
 namespace A7.Forms {
 
     export class Binding {
+
         static BindToForm<T>($form: JQuery, entity: T, customMapping?: {}): void {
             for (var prop in entity) {
                 var matchingFormEls;
@@ -22,18 +24,6 @@ namespace A7.Forms {
                 });
 
             }
-        }
-
-        static _getFormValue($el: JQuery) {
-            if (this._isCheckBox($el)) {
-                return $el.is(":checked");
-            } else {
-                return $el.val();
-            }
-        }
-
-        static _isCheckBox($el: JQuery): boolean {
-            return $el.attr("type") == "checkbox";
         }
 
         static BindFromForm<T>($form: JQuery, entity?: any, customMapping?: {}): T {
@@ -65,7 +55,7 @@ namespace A7.Forms {
 
         }
 
-        static BindSelectOptions($select: JQuery, options: string[] | Option[], selectedValue: string | number = null) {
+        static BindSelectOptions($select: JQuery, options: string[] | SelectOption[], selectedValue: string | number = null) {
             var html = '';
             var found = false;
             _.each(<any>options, (option: any) => {
@@ -90,5 +80,17 @@ namespace A7.Forms {
                 html += '<option value="' + selectedValue + '">' + selectedValue + '</option>';
             $select.append(html);
         }
-    }
+
+        static private _getFormValue($el: JQuery) {
+            if (this._isCheckBox($el)) {
+                return $el.is(":checked");
+            } else {
+                return $el.val();
+            }
+        }
+
+        static private _isCheckBox($el: JQuery): boolean {
+            return $el.attr("type") == "checkbox";
+        }
+
 }

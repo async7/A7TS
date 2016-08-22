@@ -1,6 +1,6 @@
 ﻿namespace A7.Forms {
 
-    export class Option {
+    export class SelectOption {
         public Text: string;
         public Value: string | number;
     }
