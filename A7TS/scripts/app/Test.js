@@ -1108,14 +1108,16 @@ var A7;
 var TestPage = (function (_super) {
     __extends(TestPage, _super);
     function TestPage() {
+        var _this = this;
         _super.call(this);
         this._initialize().then(function (config) {
             A7.Ioc.Container.Register(Services.ITestService, Services.TestService);
             A7.Ioc.Container.RegisterSingleton(A7.Cache.ICacheProvider, A7.Cache.BrowserCache);
             A7.Ioc.Container.RegisterSelf(Tests.Components.TestForm);
-            var cacheProvider = A7.Ioc.Container.GetInstance(A7.Cache.ICacheProvider), cachedData = cacheProvider.Get('Alien', function () { return $.Deferred().resolve("What's John Lennon's username: "); });
-            var testForm = A7.Ioc.Container.GetInstance(Tests.Components.TestForm);
-            testForm.Show();
+            _this._cacheProvider = A7.Ioc.Container.GetInstance(A7.Cache.ICacheProvider);
+            var cachedData = _this._cacheProvider.Get('Alien', function () { return $.Deferred().resolve("What's John Lennon's username: "); });
+            _this._testForm = A7.Ioc.Container.GetInstance(Tests.Components.TestForm);
+            _this._testForm.Show();
         });
     }
     return TestPage;

@@ -7,21 +7,26 @@
 
 class TestPage extends A7.Core.Page {
 
+
+    _cacheProvider: A7.Cache.ICacheProvider;
+    _testForm: Tests.Components.TestForm;
+
     constructor() {
         super();
 
         this._initialize().then(config => {
 
-            A7.Ioc.Container.Register<Services.ITestService>(Services.ITestService, Services.TestService);
-            A7.Ioc.Container.RegisterSingleton<A7.Cache.ICacheProvider>(A7.Cache.ICacheProvider, A7.Cache.BrowserCache);
-            A7.Ioc.Container.RegisterSelf<Tests.Components.TestForm>(Tests.Components.TestForm);
+            A7.Ioc.Container.Register(Services.ITestService, Services.TestService);
+            A7.Ioc.Container.RegisterSingleton(A7.Cache.ICacheProvider, A7.Cache.BrowserCache);
+            A7.Ioc.Container.RegisterSelf(Tests.Components.TestForm);
 
-            var cacheProvider = A7.Ioc.Container.GetInstance<A7.Cache.ICacheProvider>(A7.Cache.ICacheProvider),
-                cachedData = cacheProvider.Get<string>('Alien', () => $.Deferred().resolve("What's John Lennon's username: "));
+            this._cacheProvider = A7.Ioc.Container.GetInstance(A7.Cache.ICacheProvider);
 
-            var testForm = A7.Ioc.Container.GetInstance<Tests.Components.TestForm>(Tests.Components.TestForm);
+             var   cachedData = this._cacheProvider.Get<string>('Alien', () => $.Deferred().resolve("What's John Lennon's username: "));
 
-            testForm.Show();
+             this._testForm = A7.Ioc.Container.GetInstance(Tests.Components.TestForm);
+
+             this._testForm.Show();
 
         });
 

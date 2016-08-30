@@ -20,20 +20,20 @@ namespace A7.Ioc {
             return _container;
         }
 
-        GetInstance<T>(type: any): T {
-            return this._kernel.get<T>(type);
+        GetInstance(type: any): any {
+            return this._kernel.get<any>(type);
         }
 
-        Register<TService>(serviceType: any, implementationType: any) {
-            this._kernel.bind<TService>(serviceType).to(implementationType);
+        Register(serviceType: any, implementationType: any) {
+            this._kernel.bind<any>(serviceType).to(implementationType);
         }
 
-        RegisterSingleton<TService>(serviceType: any, implementationType: any) {
-            this._kernel.bind<TService>(serviceType).to(implementationType).inSingletonScope();
+        RegisterSingleton(serviceType: any, implementationType: any) {
+            this._kernel.bind<any>(serviceType).to(implementationType).inSingletonScope();
         }
 
-        RegisterSelf<TInstance>(instance: any) {
-            this._kernel.bind<TInstance>(instance).toSelf();
+        RegisterSelf(instance: any) {
+            this._kernel.bind<any>(instance).toSelf();
         }
 
     }

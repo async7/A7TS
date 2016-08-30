@@ -97,6 +97,7 @@
     <TypeScriptCompile Include="scripts\declarations\reflect\reflect-metadata.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\reflect\Reflect.d.ts" />
     <TypeScriptCompile Include="scripts\declarations\underscore\underscore.d.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7.contrib\forms\Bs3InputFormatter.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\cache\BrowserCache.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\cache\NoCache.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\cache\ICacheProvider.ts" />
@@ -116,11 +117,10 @@
     <TypeScriptCompile Include="scripts\src\framework\a7\decorators\Inject.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\decorators\Injectable.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Binding.ts" />
-    <TypeScriptCompile Include="scripts\src\framework\a7\forms\Bs3ValidationStyler.ts" />
+    <TypeScriptCompile Include="scripts\src\framework\a7.contrib\forms\Bs3ValidationStyler.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Formatting.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\IValidationStyler.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\SelectOption.ts" />
-    <TypeScriptCompile Include="scripts\src\framework\a7\forms\Validation.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\ValidationFailure.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\ValidationResult.ts" />
     <TypeScriptCompile Include="scripts\src\framework\a7\forms\Validator.ts" />
@@ -168,7 +168,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="scripts\src\components\test\" />
-    <Folder Include="scripts\src\framework\a7.contrib\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
