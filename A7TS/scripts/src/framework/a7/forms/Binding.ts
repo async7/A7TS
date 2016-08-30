@@ -81,7 +81,7 @@ namespace A7.Forms {
             $select.append(html);
         }
 
-        static private _getFormValue($el: JQuery) {
+        private static _getFormValue($el: JQuery) {
             if (this._isCheckBox($el)) {
                 return $el.is(":checked");
             } else {
@@ -89,8 +89,10 @@ namespace A7.Forms {
             }
         }
 
-        static private _isCheckBox($el: JQuery): boolean {
+        private static _isCheckBox($el: JQuery): boolean {
             return $el.attr("type") == "checkbox";
         }
+
+    }
 
 }

@@ -9,8 +9,10 @@ module Services {
 	@a7.injectable()
     export class WidgetsService extends A7.Services.Service implements Interfaces.IWidgetsService {
 
-        constructor(url = '/api/widgets') {
-            super(url);
+        constructor() {
+            super();
+
+			this._url = '/api/widgets';
         }
 
 	   
@@ -29,16 +31,11 @@ module Services.Interfaces {
 
 	export interface IWidgetsService {
 		GetById: (id: number) => JQueryPromise<Models.Widget>;
-
 		
 		OnCreate: <T>(fnHandler: (event: JQueryEventObject, model: T) => void ) => void;
-
 		OnUpdate: <T>(fnHandler: (event: JQueryEventObject, model: T) => void ) => void;         
-        
 		OnDelete: <T>(fnHandler: (event: JQueryEventObject, model: T) => void ) => void;
-
 		OnModified: <T>(fnHandler: (event: JQueryEventObject, model: T, eventType: string) => void) => void;
-
 	}
 
 }
