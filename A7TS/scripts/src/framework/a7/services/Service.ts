@@ -9,7 +9,7 @@ namespace A7.Services {
         UPDATED_EVENT: string = 'Updated';
         DELETED_EVENT: string = 'Deleted';
 
-        _url: string;
+        protected _url: string;
 
         handleWebRequest<T>(promise: JQueryPromise<T>, eventName: string = null): JQueryPromise<T> {
             var dfd = $.Deferred<T>(),
@@ -25,9 +25,7 @@ namespace A7.Services {
             return dfd.promise();
         }
 
-        constructor(url: string) {
-            this._url = url;
-        }
+        constructor() { }
 
         GetUrl(): string {
             return this._url;

@@ -689,11 +689,10 @@ var A7;
     var Services;
     (function (Services) {
         var Service = (function () {
-            function Service(url) {
+            function Service() {
                 this.CREATED_EVENT = 'Created';
                 this.UPDATED_EVENT = 'Updated';
                 this.DELETED_EVENT = 'Deleted';
-                this._url = url;
             }
             Service.prototype.handleWebRequest = function (promise, eventName) {
                 if (eventName === void 0) { eventName = null; }
