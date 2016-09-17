@@ -19,6 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="gulpfile.js" />
     <Content Include="scripts\app\Test.js" />
     <Content Include="scripts\lib\crossroads\0.12\crossroads.es5.js">
       <DependentUpon>crossroads.js</DependentUpon>
@@ -157,6 +158,7 @@
     <Content Include="scripts\src\tsconfig.json" />
     <Content Include="scripts\appconfig.json" />
     <Content Include="packages.config" />
+    <Content Include="package.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -167,6 +169,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
+    <Folder Include="scripts\app\dist\" />
     <Folder Include="scripts\src\components\test\" />
   </ItemGroup>
   <ItemGroup>

@@ -26,7 +26,7 @@ namespace Tests.Components {
             @a7.inject(Services.ITestService) userService: Services.ITestService,
             @a7.inject(A7.Cache.ICacheProvider) cacheProvider: A7.Cache.ICacheProvider
         ) {
-            super();
+            super("test");
 
             this._userService = userService;
             this._cacheProvider = cacheProvider;

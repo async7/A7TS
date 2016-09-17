@@ -19,7 +19,7 @@ namespace A7.Core {
 
         constructor() {
             var componentName = Utilities.ObjectUtility.GetObjectName(this);
-
+            
             this._logger = Logging.LogManager.GetLogger(componentName);
             this._componentOptions = Configuration.ConfigurationManager.GetComponentOptions(componentName);
             this._$el = $(this._componentOptions.Selector);

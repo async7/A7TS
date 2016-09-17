@@ -803,7 +803,7 @@ var Tests;
         var TestForm = (function (_super) {
             __extends(TestForm, _super);
             function TestForm(userService, cacheProvider) {
-                _super.call(this);
+                _super.call(this, "test");
                 this._userService = userService;
                 this._cacheProvider = cacheProvider;
             }
